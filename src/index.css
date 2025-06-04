@@ -1,84 +1,134 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Neural Nexus Theme - Complete Shadcn UI Configuration */
+/* This theme creates a sophisticated learning environment that enhances focus and cognitive function */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base Colors - The foundation of your interface */
+    --background: 0 0% 100%;           /* Pure white background for maximum readability */
+    --foreground: 222.2 84% 4.9%;     /* Deep charcoal for primary text - ensures excellent contrast */
+    
+    /* Card and Surface Colors - Creates depth and hierarchy */
+    --card: 0 0% 100%;                /* White cards maintain clean, distraction-free surfaces */
+    --card-foreground: 222.2 84% 4.9%; /* Consistent text color across all surfaces */
+    
+    /* Popover and Modal Colors - Maintains visual consistency */
+    --popover: 0 0% 100%;             /* White background for dropdowns and overlays */
+    --popover-foreground: 222.2 84% 4.9%; /* Same readable text color */
+    
+    /* Primary Brand Colors - The neural network inspired blue */
+    --primary: 221.2 83.2% 53.3%;     /* #3b82f6 - Blue that stimulates focus and cognitive processing */
+    --primary-foreground: 210 20% 98%; /* Light text on primary backgrounds for accessibility */
+    
+    /* Secondary Brand Colors - Supporting purple that enhances creativity */
+    --secondary: 270 95.2% 75.3%;     /* #8b5cf6 - Violet that promotes higher-order thinking */
+    --secondary-foreground: 222.2 84% 4.9%; /* Dark text maintains readability on lighter secondary */
+    
+    /* Muted Colors - Subtle backgrounds and disabled states */
+    --muted: 210 40% 96%;             /* Very light blue-gray for subtle backgrounds */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Medium gray for secondary text and descriptions */
+    
+    /* Accent Colors - The energizing cyan for highlights and CTAs */
+    --accent: 198.6 88.7% 48.4%;      /* #06b6d4 - Cyan that maintains alertness without overstimulation */
+    --accent-foreground: 210 20% 98%; /* Light text on accent backgrounds */
+    
+    /* Destructive/Error Colors - Clear feedback without harsh alarm */
+    --destructive: 0 84.2% 60.2%;     /* #ef4444 - Clear but not aggressive red for errors */
+    --destructive-foreground: 210 20% 98%; /* Light text on error backgrounds */
+    
+    /* Border and Outline Colors - Subtle definition without distraction */
+    --border: 214.3 31.8% 91.4%;      /* Light blue-gray borders that complement the theme */
+    --input: 214.3 31.8% 91.4%;       /* Same as border for input field consistency */
+    --ring: 221.2 83.2% 53.3%;        /* Primary blue for focus rings - maintains brand consistency */
+    
+    /* Radius Values - Modern, friendly corner rounding */
+    --radius: 0.5rem;                 /* 8px radius for a modern, approachable feel */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Success Colors - For achievements and positive feedback */
+    --success: 160 84.1% 39.4%;        /* #10b981 - Green that celebrates accomplishment */
+    --success-foreground: 0 0% 98%;    /* Light text on success backgrounds */
+    
+    /* Warning Colors - For important notices and alerts */
+    --warning: 45.4 93.4% 47.5%;       /* #f59e0b - Amber that draws attention without alarm */
+    --warning-foreground: 26 83.3% 14.1%; /* Dark text on warning backgrounds */
+    
+    /* Info Colors - For helpful tips and supplementary information */
+    --info: 198.6 88.7% 48.4%;         /* Using our accent cyan for informational content */
+    --info-foreground: 210 20% 98%;    /* Light text on info backgrounds */
+    
+    /* Learning Progress Colors - For progress bars and completion indicators */
+    --progress-bg: 210 40% 96%;        /* Light background for progress containers */
+    --progress-fill: 221.2 83.2% 53.3%; /* Primary blue for progress fill */
+    
+    /* Interactive States - Hover and active states that enhance the neural theme */
+    --hover-overlay: 221.2 83.2% 53.3% / 0.1;    /* 10% primary overlay for hover states */
+    --active-overlay: 221.2 83.2% 53.3% / 0.2;   /* 20% primary overlay for active states */
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  /* Dark Mode Configuration - Maintains the neural theme while being easy on the eyes */
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark Base Colors - Sophisticated dark surfaces */
+    --background: 222.2 84% 4.9%;     /* Deep charcoal background reduces eye strain */
+    --foreground: 210 20% 98%;        /* Light text for excellent readability */
+    
+    /* Dark Card Colors - Elevated surfaces in dark mode */
+    --card: 222.2 84% 4.9%;           /* Same as background for seamless integration */
+    --card-foreground: 210 20% 98%;   /* Light text maintains consistency */
+    
+    /* Dark Popover Colors */
+    --popover: 222.2 84% 4.9%;        /* Consistent with other dark surfaces */
+    --popover-foreground: 210 20% 98%; /* Light text for readability */
+    
+    /* Dark Primary Colors - Adjusted for dark backgrounds */
+    --primary: 221.2 83.2% 60%;       /* Slightly lighter blue for better visibility on dark backgrounds */
+    --primary-foreground: 210 20% 98%; /* Light text maintains accessibility */
+    
+    /* Dark Secondary Colors - Purple with better dark mode contrast */
+    --secondary: 217.2 32.6% 17.5%;   /* Darker purple background for better contrast */
+    --secondary-foreground: 210 20% 98%; /* Light text for readability */
+    
+    /* Dark Muted Colors - Subtle contrast in dark mode */
+    --muted: 217.2 32.6% 17.5%;       /* Darker muted background */
+    --muted-foreground: 215 20.2% 65.1%; /* Medium light gray for secondary text */
+    
+    /* Dark Accent Colors - Cyan maintains its energy in dark mode */
+    --accent: 198.6 88.7% 48.4%;      /* Same cyan - provides perfect contrast on dark */
+    --accent-foreground: 222.2 84% 4.9%; /* Dark text on bright accent */
+    
+    /* Dark Destructive Colors - Error feedback that's clear but not harsh */
+    --destructive: 0 62.8% 30.6%;     /* Darker red for dark mode */
+    --destructive-foreground: 210 20% 98%; /* Light text on error backgrounds */
+    
+    /* Dark Border Colors - Subtle definition in dark mode */
+    --border: 217.2 32.6% 17.5%;      /* Dark borders that provide subtle separation */
+    --input: 217.2 32.6% 17.5%;       /* Input borders match other borders */
+    --ring: 221.2 83.2% 60%;          /* Primary blue focus ring with increased lightness for dark mode */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --success: 160 84.1% 39.4%;        /* Success green works well in dark mode */
+    --success-foreground: 0 0% 98%;    /* Light text maintains readability */
+    
+    --warning: 45.4 93.4% 47.5%;       /* Warning amber remains vibrant */
+    --warning-foreground: 26 83.3% 14.1%; /* Dark text for contrast */
+    
+    --info: 198.6 88.7% 48.4%;         /* Info cyan maintains its energy */
+    --info-foreground: 222.2 84% 4.9%; /* Dark text on bright info backgrounds */
+    
+    --progress-bg: 217.2 32.6% 17.5%;  /* Darker progress background */
+    --progress-fill: 221.2 83.2% 60%;  /* Primary blue with increased lightness for dark mode */
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -96,6 +146,14 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  code, pre {
+    @apply font-code;
   }
 }

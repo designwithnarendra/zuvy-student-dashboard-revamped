@@ -1,11 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { mockStudent, mockCourses } from "@/lib/mockData";
 
 const Index = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Simulate checking user enrollment
+    const enrolledCourses = mockCourses.filter(course => course.status === 'enrolled');
+    
+    if (enrolledCourses.length === 1) {
+      // If enrolled in single course, go directly to course page
+      navigate(`/course/${enrolledCourses[0].id}`);
+    } else if (enrolledCourses.length > 1) {
+      // If enrolled in multiple courses, go to student dashboard
+      navigate('/dashboard');
+    } else {
+      // If no enrolled courses, stay on this page (could be a landing page)
+      // For demo purposes, we'll redirect to dashboard anyway
+      navigate('/dashboard');
+    }
+  }, [navigate]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="text-center animate-fade-in">
+        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+        <h1 className="text-2xl font-heading font-semibold mb-2">Neural Nexus</h1>
+        <p className="text-muted-foreground">Loading your learning dashboard...</p>
       </div>
     </div>
   );
