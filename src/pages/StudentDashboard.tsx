@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Clock, Calendar, BookOpen, Users, Play, RotateCcw, CheckCircle } from "lucide-react";
+import { Clock, Calendar, BookOpen, Users, Play, RotateCcw, CheckCircle, Video, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockStudent, mockCourses, Course } from "@/lib/mockData";
 
