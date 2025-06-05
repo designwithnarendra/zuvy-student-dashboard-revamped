@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Play, RotateCcw, CheckCircle, Video, FileText } from "lucide-react";
+import { Play, RotateCcw, CheckCircle, Video, FileText, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockStudent, mockCourses, Course } from "@/lib/mockData";
 import Header from "@/components/Header";
