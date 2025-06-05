@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Video, BookOpen, FileText, Clock, Calendar, Users, Play, CheckCircle2, XCircle } from "lucide-react";
 import { mockCourses, RecentClass } from "@/lib/mockData";
+import Header from "@/components/Header";
 
 const CourseDashboard = () => {
   const { courseId } = useParams();
@@ -50,7 +51,7 @@ const CourseDashboard = () => {
   const AttendanceModal = ({ classes }: { classes: RecentClass[] }) => (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="link" className="p-0 h-auto text-primary">
+        <Button variant="link" className="p-0 h-auto text-primary mx-auto">
           View Full Attendance
         </Button>
       </DialogTrigger>
@@ -98,9 +99,10 @@ const CourseDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <div className="container mx-auto px-6 py-8 max-w-7xl">
         {/* Course Information Banner */}
-        <Card className="mb-8">
+        <Card className="mb-8 shadow-8dp">
           <CardContent className="p-6">
             <div className="flex items-start gap-6 mb-6">
               <img
@@ -119,6 +121,13 @@ const CourseDashboard = () => {
                   <span className="font-medium">{course.instructor.name}</span>
                 </div>
               </div>
+              <div className="flex-shrink-0">
+                <img
+                  src="/lovable-uploads/afe.png"
+                  alt="AFE Brand"
+                  className="h-12"
+                />
+              </div>
             </div>
 
             {/* Progress Bar */}
@@ -127,7 +136,12 @@ const CourseDashboard = () => {
                 <span className="font-medium">Overall Progress</span>
                 <span className="text-sm text-muted-foreground">{course.progress}%</span>
               </div>
-              <Progress value={course.progress} className="h-3" />
+              <div className="bg-primary-light rounded-full h-3">
+                <div 
+                  className="bg-primary h-3 rounded-full transition-all duration-300"
+                  style={{ width: `${course.progress}%` }}
+                />
+              </div>
             </div>
 
             {/* Batch Information */}
@@ -164,10 +178,45 @@ const CourseDashboard = () => {
         </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - What's Next & Current Module */}
+          {/* Left Column - Current Module & What's Next */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Current Module Section - Moved Above */}
+            <Card className="shadow-4dp">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl font-heading font-semibold mb-2">
+                      Current Module: {course.currentModule.name}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {course.currentModule.currentChapter}
+                    </p>
+                  </div>
+                  <Button asChild>
+                    <Link to={`/course/${courseId}/curriculum`}>
+                      <Play className="w-4 h-4 mr-2" />
+                      {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
+                    </Link>
+                  </Button>
+                </div>
+                {/* Current Module Progress */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Module Progress</span>
+                    <span className="text-sm text-muted-foreground">65%</span>
+                  </div>
+                  <div className="bg-primary-light rounded-full h-2">
+                    <div 
+                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      style={{ width: '65%' }}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* What's Next Section */}
-            <Card>
+            <Card className="shadow-4dp">
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <CardTitle className="text-xl">What's Next?</CardTitle>
@@ -181,14 +230,23 @@ const CourseDashboard = () => {
                   <div className="space-y-4">
                     {course.upcomingItems.map((item, index) => (
                       <div key={item.id}>
-                        <div className="flex items-start gap-4 p-4 rounded-lg bg-muted/30">
+                        <div className="flex items-start gap-4 p-4 rounded-lg">
                           <div className="flex-shrink-0 mt-1">
                             {getItemIcon(item.type)}
                           </div>
                           <div className="flex-1">
                             <div className="flex items-start justify-between gap-4 mb-2">
                               <h4 className="font-medium text-base">{item.title}</h4>
-                              <Badge variant="secondary" className="whitespace-nowrap">
+                              <Badge 
+                                variant="outline" 
+                                className={`whitespace-nowrap ${
+                                  item.type === 'class' 
+                                    ? 'bg-secondary-light text-foreground border-secondary-light' 
+                                    : item.type === 'assessment'
+                                    ? 'bg-accent-light text-foreground border-accent-light'
+                                    : 'bg-info-light text-foreground border-info-light'
+                                }`}
+                              >
                                 {item.tag}
                               </Badge>
                             </div>
@@ -225,33 +283,11 @@ const CourseDashboard = () => {
                 )}
               </CardContent>
             </Card>
-
-            {/* Current Module Section */}
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-xl font-heading font-semibold mb-2">
-                      Current Module: {course.currentModule.name}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {course.currentModule.currentChapter}
-                    </p>
-                  </div>
-                  <Button asChild>
-                    <Link to={`/course/${courseId}/curriculum`}>
-                      <Play className="w-4 h-4 mr-2" />
-                      {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
-                    </Link>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Right Column - Attendance */}
           <div>
-            <Card>
+            <Card className="shadow-4dp">
               <CardHeader>
                 <CardTitle>Attendance</CardTitle>
               </CardHeader>
@@ -296,7 +332,9 @@ const CourseDashboard = () => {
                   ))}
                 </div>
 
-                <AttendanceModal classes={course.attendanceStats.recentClasses} />
+                <div className="flex justify-center">
+                  <AttendanceModal classes={course.attendanceStats.recentClasses} />
+                </div>
               </CardContent>
             </Card>
           </div>

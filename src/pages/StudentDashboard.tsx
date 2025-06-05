@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Clock, Calendar, BookOpen, Users, Play, RotateCcw, CheckCircle, Video, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockStudent, mockCourses, Course } from "@/lib/mockData";
+import Header from "@/components/Header";
 
 const StudentDashboard = () => {
   const [filter, setFilter] = useState<'enrolled' | 'completed'>('enrolled');
@@ -63,6 +64,7 @@ const StudentDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <div className="container mx-auto px-6 py-8 max-w-6xl">
         {/* Welcome Message */}
         <div className="mb-8">
@@ -102,7 +104,7 @@ const StudentDashboard = () => {
         {/* Course Cards */}
         <div className="space-y-6">
           {filteredCourses.map((course) => (
-            <Card key={course.id} className="w-full hover:shadow-lg transition-shadow duration-200">
+            <Card key={course.id} className="w-full shadow-4dp hover:shadow-8dp transition-shadow duration-200">
               <CardContent className="p-6">
                 <div className="flex gap-6 mb-6">
                   {/* Course Image */}
@@ -145,7 +147,12 @@ const StudentDashboard = () => {
                     <span className="text-sm font-medium">Progress</span>
                     <span className="text-sm text-muted-foreground">{course.progress}%</span>
                   </div>
-                  <Progress value={course.progress} className="h-2" />
+                  <div className="bg-primary-light rounded-full h-2">
+                    <div 
+                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${course.progress}%` }}
+                    />
+                  </div>
                 </div>
 
                 {/* Separator */}
@@ -155,7 +162,7 @@ const StudentDashboard = () => {
                 {course.upcomingItems.length > 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {course.upcomingItems.slice(0, 3).map((item) => (
-                      <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                      <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg">
                         <div className="flex-shrink-0 mt-1">
                           {item.type === 'class' && <Video className="w-4 h-4 text-primary" />}
                           {item.type === 'assessment' && <BookOpen className="w-4 h-4 text-accent" />}
@@ -166,7 +173,16 @@ const StudentDashboard = () => {
                             <h4 className="text-sm font-medium line-clamp-1">
                               {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
                             </h4>
-                            <Badge variant="secondary" className="text-xs px-2 py-0.5 whitespace-nowrap">
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs px-2 py-0.5 whitespace-nowrap ${
+                                item.type === 'class' 
+                                  ? 'bg-secondary-light text-foreground border-secondary-light' 
+                                  : item.type === 'assessment'
+                                  ? 'bg-accent-light text-foreground border-accent-light'
+                                  : 'bg-info-light text-foreground border-info-light'
+                              }`}
+                            >
                               {item.type === 'class' && 'Live Class'}
                               {item.type === 'assessment' && 'Assessment'}
                               {item.type === 'assignment' && 'Assignment'}
@@ -186,7 +202,7 @@ const StudentDashboard = () => {
         </div>
 
         {filteredCourses.length === 0 && (
-          <Card className="text-center py-12">
+          <Card className="text-center py-12 shadow-4dp">
             <CardContent>
               <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-heading font-semibold mb-2">

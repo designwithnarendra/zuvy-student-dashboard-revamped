@@ -4,7 +4,6 @@ import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Video, 
@@ -16,15 +15,19 @@ import {
   Circle,
   ArrowLeft,
   Calendar,
-  User
+  User,
+  ChevronDown,
+  ChevronRight
 } from "lucide-react";
 import { mockCourses, Module, Topic, TopicItem } from "@/lib/mockData";
+import Header from "@/components/Header";
 
 const CurriculumPage = () => {
   const { courseId, moduleId, topicId } = useParams();
   const course = mockCourses.find(c => c.id === courseId);
   const [selectedModule, setSelectedModule] = useState(moduleId || course?.modules[0]?.id || "");
   const [selectedTopic, setSelectedTopic] = useState(topicId || "");
+  const [expandedModules, setExpandedModules] = useState<string[]>([selectedModule]);
 
   if (!course) {
     return (
@@ -98,11 +101,51 @@ const CurriculumPage = () => {
     }).format(date);
   };
 
+  const toggleModule = (moduleId: string) => {
+    setExpandedModules(prev => 
+      prev.includes(moduleId) 
+        ? prev.filter(id => id !== moduleId)
+        : [...prev, moduleId]
+    );
+  };
+
+  // Enhanced topic items with videos and articles for Module 1, Topic 1
+  const getEnhancedItems = (topic: Topic, moduleId: string): TopicItem[] => {
+    if (moduleId === "1" && topic.id === "1") {
+      return [
+        ...topic.items,
+        {
+          id: "video-1",
+          title: "Introduction to React Components",
+          type: "video" as const,
+          status: "not-started" as const,
+          duration: "15 min"
+        },
+        {
+          id: "article-1", 
+          title: "Understanding JSX Syntax",
+          type: "article" as const,
+          status: "not-started" as const,
+          duration: "8 min read"
+        },
+        {
+          id: "video-2",
+          title: "Props and State Management",
+          type: "video" as const,
+          status: "completed" as const,
+          duration: "22 min"
+        }
+      ];
+    }
+    return topic.items;
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <div className="flex">
         {/* Left Panel - Module Navigation */}
-        <div className="w-80 bg-card border-r border-border">
+        <div className="w-80 bg-card border-r border-border shadow-4dp">
           <div className="p-6 border-b border-border">
             <Button variant="ghost" size="sm" asChild className="mb-4">
               <Link to={`/course/${courseId}`}>
@@ -119,12 +162,9 @@ const CurriculumPage = () => {
               {course.modules.map((module: Module) => (
                 <div key={module.id} className="space-y-2">
                   <Button
-                    variant={selectedModule === module.id ? "default" : "ghost"}
-                    className="w-full justify-start text-left h-auto p-3"
-                    onClick={() => {
-                      setSelectedModule(module.id);
-                      setSelectedTopic("");
-                    }}
+                    variant="ghost"
+                    className="w-full justify-between text-left h-auto p-3"
+                    onClick={() => toggleModule(module.id)}
                   >
                     <div>
                       <div className="font-medium">Module {module.id}: {module.name}</div>
@@ -132,9 +172,14 @@ const CurriculumPage = () => {
                         {module.topics.length} topics
                       </div>
                     </div>
+                    {expandedModules.includes(module.id) ? (
+                      <ChevronDown className="w-4 h-4" />
+                    ) : (
+                      <ChevronRight className="w-4 h-4" />
+                    )}
                   </Button>
                   
-                  {selectedModule === module.id && (
+                  {expandedModules.includes(module.id) && (
                     <div className="ml-4 space-y-1">
                       {module.topics.map((topic: Topic) => (
                         <Button
@@ -142,7 +187,10 @@ const CurriculumPage = () => {
                           variant={selectedTopic === topic.id ? "secondary" : "ghost"}
                           size="sm"
                           className="w-full justify-start text-left"
-                          onClick={() => setSelectedTopic(topic.id)}
+                          onClick={() => {
+                            setSelectedModule(module.id);
+                            setSelectedTopic(topic.id);
+                          }}
                         >
                           {topic.name}
                         </Button>
@@ -171,87 +219,103 @@ const CurriculumPage = () => {
                 </div>
 
                 <div className="space-y-4">
-                  {currentTopic.items.map((item: TopicItem) => (
-                    <Card key={item.id} className="hover:shadow-md transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0 mt-1">
-                            {getItemIcon(item.type, item.status)}
-                          </div>
-                          
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between gap-4 mb-2">
-                              <h3 className="text-lg font-medium">{item.title}</h3>
-                              <div className="flex items-center gap-2">
-                                {getStatusIcon(item.status)}
-                                {getStatusBadge(item.status)}
-                              </div>
+                  {getEnhancedItems(currentTopic, selectedModule).map((item: TopicItem, index) => {
+                    // Add recording after completed live class
+                    const items = [item];
+                    if (item.type === 'live-class' && item.status === 'completed') {
+                      items.push({
+                        id: `${item.id}-recording`,
+                        title: `${item.title} - Recording`,
+                        type: 'recording' as const,
+                        status: 'completed' as const,
+                        duration: item.duration
+                      });
+                    }
+
+                    return items.map((currentItem, itemIndex) => (
+                      <Card key={`${currentItem.id}-${itemIndex}`} className="hover:shadow-md transition-shadow shadow-4dp">
+                        <CardContent className="p-6">
+                          <div className="flex items-start gap-4">
+                            <div className="flex-shrink-0 mt-1">
+                              {getItemIcon(currentItem.type, currentItem.status)}
                             </div>
                             
-                            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                              {item.duration && (
-                                <div className="flex items-center gap-1">
-                                  <Clock className="w-4 h-4" />
-                                  {item.duration}
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between gap-4 mb-2">
+                                <h3 className="text-lg font-medium">{currentItem.title}</h3>
+                                <div className="flex items-center gap-2">
+                                  {getStatusIcon(currentItem.status)}
+                                  {getStatusBadge(currentItem.status)}
                                 </div>
-                              )}
-                              {item.dueDate && (
-                                <div className="flex items-center gap-1">
-                                  <Calendar className="w-4 h-4" />
-                                  Due: {formatDueDate(item.dueDate)}
-                                </div>
-                              )}
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Badge variant="outline" className="capitalize">
-                                  {item.type.replace('-', ' ')}
-                                </Badge>
                               </div>
                               
-                              <div className="flex gap-2">
-                                {item.type === 'live-class' && item.meetLink && (
-                                  <Button size="sm" variant="outline" asChild>
-                                    <a href={item.meetLink} target="_blank" rel="noopener noreferrer">
-                                      Join Class
-                                    </a>
-                                  </Button>
-                                )}
-                                {item.type === 'recording' && item.status === 'completed' && (
-                                  <Button size="sm" variant="outline">
-                                    <Play className="w-4 h-4 mr-2" />
-                                    Watch Recording
-                                  </Button>
-                                )}
-                                {item.type === 'recording' && item.status !== 'completed' && (
-                                  <div className="text-sm text-muted-foreground">
-                                    Recording will be available after live class
+                              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                                {currentItem.duration && (
+                                  <div className="flex items-center gap-1">
+                                    <Clock className="w-4 h-4" />
+                                    {currentItem.duration}
                                   </div>
                                 )}
-                                {(item.type === 'video' || item.type === 'article') && (
-                                  <Button size="sm">
-                                    <Play className="w-4 h-4 mr-2" />
-                                    {item.status === 'completed' ? 'Review' : 'Start'}
-                                  </Button>
+                                {currentItem.dueDate && (
+                                  <div className="flex items-center gap-1">
+                                    <Calendar className="w-4 h-4" />
+                                    Due: {formatDueDate(currentItem.dueDate)}
+                                  </div>
                                 )}
-                                {(item.type === 'assignment' || item.type === 'assessment' || item.type === 'quiz') && (
-                                  <Button size="sm" variant={item.status === 'completed' ? 'outline' : 'default'}>
-                                    {item.status === 'completed' ? 'View Submission' : 'Start'}
-                                  </Button>
-                                )}
-                                {item.type === 'feedback' && (
-                                  <Button size="sm" variant="outline">
-                                    Give Feedback
-                                  </Button>
-                                )}
+                              </div>
+
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  <Badge variant="outline" className="capitalize">
+                                    {currentItem.type.replace('-', ' ')}
+                                  </Badge>
+                                </div>
+                                
+                                <div className="flex gap-2">
+                                  {currentItem.type === 'live-class' && currentItem.meetLink && (
+                                    <Button size="sm" variant="outline" asChild>
+                                      <a href={currentItem.meetLink} target="_blank" rel="noopener noreferrer">
+                                        Join Class
+                                      </a>
+                                    </Button>
+                                  )}
+                                  {currentItem.type === 'recording' && currentItem.status === 'completed' && (
+                                    <Button size="sm" variant="outline">
+                                      <Play className="w-4 h-4 mr-2" />
+                                      Watch Recording
+                                    </Button>
+                                  )}
+                                  {currentItem.type === 'recording' && currentItem.status !== 'completed' && (
+                                    <div className="text-sm text-muted-foreground">
+                                      Recording will be available after live class
+                                    </div>
+                                  )}
+                                  {(currentItem.type === 'video' || currentItem.type === 'article') && (
+                                    <Button size="sm" asChild>
+                                      <Link to={`/content/${currentItem.type}/${currentItem.id}`}>
+                                        <Play className="w-4 h-4 mr-2" />
+                                        {currentItem.status === 'completed' ? 'Review' : 'Start'}
+                                      </Link>
+                                    </Button>
+                                  )}
+                                  {(currentItem.type === 'assignment' || currentItem.type === 'assessment' || currentItem.type === 'quiz') && (
+                                    <Button size="sm" variant={currentItem.status === 'completed' ? 'outline' : 'default'}>
+                                      {currentItem.status === 'completed' ? 'View Submission' : 'Start'}
+                                    </Button>
+                                  )}
+                                  {currentItem.type === 'feedback' && (
+                                    <Button size="sm" variant="outline">
+                                      Give Feedback
+                                    </Button>
+                                  )}
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ));
+                  })}
                 </div>
               </div>
             ) : currentModule ? (
@@ -268,32 +332,32 @@ const CurriculumPage = () => {
 
                 <div className="grid gap-6">
                   {currentModule.topics.map((topic: Topic) => (
-                    <Card key={topic.id} className="hover:shadow-md transition-shadow cursor-pointer"
+                    <Card key={topic.id} className="hover:shadow-md transition-shadow cursor-pointer shadow-4dp"
                           onClick={() => setSelectedTopic(topic.id)}>
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between mb-3">
                           <h3 className="text-xl font-heading font-semibold">{topic.name}</h3>
                           <div className="text-sm text-muted-foreground">
-                            {topic.items.length} items
+                            {getEnhancedItems(topic, selectedModule).length} items
                           </div>
                         </div>
                         
                         <div className="flex gap-2 flex-wrap">
-                          {topic.items.slice(0, 3).map((item: TopicItem) => (
+                          {getEnhancedItems(topic, selectedModule).slice(0, 3).map((item: TopicItem) => (
                             <Badge key={item.id} variant="outline" className="capitalize">
                               {item.type.replace('-', ' ')}
                             </Badge>
                           ))}
-                          {topic.items.length > 3 && (
+                          {getEnhancedItems(topic, selectedModule).length > 3 && (
                             <Badge variant="outline">
-                              +{topic.items.length - 3} more
+                              +{getEnhancedItems(topic, selectedModule).length - 3} more
                             </Badge>
                           )}
                         </div>
                         
                         <div className="mt-4 flex items-center justify-between">
                           <div className="text-sm text-muted-foreground">
-                            {topic.items.filter(item => item.status === 'completed').length} of {topic.items.length} completed
+                            {getEnhancedItems(topic, selectedModule).filter(item => item.status === 'completed').length} of {getEnhancedItems(topic, selectedModule).length} completed
                           </div>
                           <Button size="sm" variant="outline">
                             View Topic
@@ -314,14 +378,17 @@ const CurriculumPage = () => {
                 
                 <div className="grid gap-6">
                   {course.modules.map((module: Module) => (
-                    <Card key={module.id} className="hover:shadow-md transition-shadow cursor-pointer"
-                          onClick={() => setSelectedModule(module.id)}>
+                    <Card key={module.id} className="hover:shadow-md transition-shadow cursor-pointer shadow-4dp"
+                          onClick={() => {
+                            setSelectedModule(module.id);
+                            setExpandedModules(prev => [...prev, module.id]);
+                          }}>
                       <CardContent className="p-6">
                         <h3 className="text-xl font-heading font-semibold mb-2">
                           Module {module.id}: {module.name}
                         </h3>
                         <p className="text-muted-foreground mb-4">
-                          {module.topics.length} topics • {module.topics.reduce((acc, topic) => acc + topic.items.length, 0)} items
+                          {module.topics.length} topics • {module.topics.reduce((acc, topic) => acc + getEnhancedItems(topic, module.id).length, 0)} items
                         </p>
                         <Button size="sm" variant="outline">
                           Enter Module
