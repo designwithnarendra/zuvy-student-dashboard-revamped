@@ -17,7 +17,7 @@ const Header = () => {
       {/* Left - Logo */}
       <div className="flex items-center">
         <img 
-          src="/lovable-uploads/b32d537d-ce98-40b1-a3ab-64f5e9ee93be.png" 
+          src="/lovable-uploads/e9f9f8b0-7112-47b9-8664-85f7a8319bb5.png" 
           alt="Zuvy" 
           className="h-10"
         />
@@ -34,7 +34,7 @@ const Header = () => {
           {isDark ? (
             <Sun className="h-4 w-4" />
           ) : (
-            <Moon className="h-4 w-4" />
+            <Moon className="h-4 h-4" />
           )}
         </Button>
         

@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Video, BookOpen, FileText, Clock, Calendar, Users, Play, CheckCircle2, XCircle } from "lucide-react";
@@ -42,8 +41,8 @@ const CourseDashboard = () => {
   const getItemIcon = (type: string) => {
     switch (type) {
       case 'class': return <Video className="w-5 h-5 text-primary" />;
-      case 'assessment': return <BookOpen className="w-5 h-5 text-accent" />;
-      case 'assignment': return <FileText className="w-5 h-5 text-secondary" />;
+      case 'assessment': return <BookOpen className="w-5 h-5 text-warning" />;
+      case 'assignment': return <FileText className="w-5 h-5 text-info" />;
       default: return <Clock className="w-5 h-5 text-muted-foreground" />;
     }
   };
@@ -100,87 +99,85 @@ const CourseDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="container mx-auto px-6 py-8 max-w-7xl">
+      <div className="w-full max-w-7xl mx-auto px-6 py-8">
         {/* Course Information Banner */}
-        <Card className="mb-8 shadow-8dp">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-6 mb-6">
+        <div className="w-full mb-8 p-6 rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/5 via-background to-accent/5 border border-border/50">
+          <div className="flex items-start gap-6 mb-6">
+            <img
+              src={course.image}
+              alt={course.name}
+              className="w-24 h-24 rounded-lg object-cover flex-shrink-0"
+            />
+            <div className="flex-1">
+              <h1 className="text-3xl font-heading font-bold mb-2">{course.name}</h1>
+              <p className="text-lg text-muted-foreground mb-4">{course.description}</p>
+              <div className="flex items-center gap-2">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={course.instructor.avatar} />
+                  <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
+                </Avatar>
+                <span className="font-medium">{course.instructor.name}</span>
+              </div>
+            </div>
+            <div className="flex-shrink-0">
               <img
-                src={course.image}
-                alt={course.name}
-                className="w-24 h-24 rounded-lg object-cover flex-shrink-0"
+                src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
+                alt="AFE Brand"
+                className="h-12"
               />
-              <div className="flex-1">
-                <h1 className="text-3xl font-heading font-bold mb-2">{course.name}</h1>
-                <p className="text-lg text-muted-foreground mb-4">{course.description}</p>
-                <div className="flex items-center gap-2">
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src={course.instructor.avatar} />
-                    <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <span className="font-medium">{course.instructor.name}</span>
-                </div>
-              </div>
-              <div className="flex-shrink-0">
-                <img
-                  src="/lovable-uploads/afe.png"
-                  alt="AFE Brand"
-                  className="h-12"
-                />
-              </div>
             </div>
+          </div>
 
-            {/* Progress Bar */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-medium">Overall Progress</span>
-                <span className="text-sm text-muted-foreground">{course.progress}%</span>
-              </div>
-              <div className="bg-primary-light rounded-full h-3">
-                <div 
-                  className="bg-primary h-3 rounded-full transition-all duration-300"
-                  style={{ width: `${course.progress}%` }}
-                />
-              </div>
+          {/* Progress Bar */}
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-medium">Overall Progress</span>
+              <span className="text-sm text-muted-foreground">{course.progress}%</span>
             </div>
+            <div className="progress-bg rounded-full h-3">
+              <div 
+                className="progress-fill h-3 rounded-full transition-all duration-300"
+                style={{ width: `${course.progress}%` }}
+              />
+            </div>
+          </div>
 
-            {/* Batch Information */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="flex items-center gap-3">
-                <Badge variant="outline" className="p-2">
-                  <BookOpen className="w-4 h-4" />
-                </Badge>
-                <div>
-                  <p className="text-sm text-muted-foreground">Batch</p>
-                  <p className="font-medium">{course.batchName}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="outline" className="p-2">
-                  <Clock className="w-4 h-4" />
-                </Badge>
-                <div>
-                  <p className="text-sm text-muted-foreground">Duration</p>
-                  <p className="font-medium">{course.duration}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="outline" className="p-2">
-                  <Users className="w-4 h-4" />
-                </Badge>
-                <div>
-                  <p className="text-sm text-muted-foreground">Students</p>
-                  <p className="font-medium">{course.studentsEnrolled} enrolled</p>
-                </div>
+          {/* Batch Information */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex items-center gap-3">
+              <Badge variant="outline" className="p-2">
+                <BookOpen className="w-4 h-4" />
+              </Badge>
+              <div>
+                <p className="text-sm text-muted-foreground">Batch</p>
+                <p className="font-medium">{course.batchName}</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="flex items-center gap-3">
+              <Badge variant="outline" className="p-2">
+                <Clock className="w-4 h-4" />
+              </Badge>
+              <div>
+                <p className="text-sm text-muted-foreground">Duration</p>
+                <p className="font-medium">{course.duration}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Badge variant="outline" className="p-2">
+                <Users className="w-4 h-4" />
+              </Badge>
+              <div>
+                <p className="text-sm text-muted-foreground">Students</p>
+                <p className="font-medium">{course.studentsEnrolled} enrolled</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Current Module & What's Next */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Current Module Section - Moved Above */}
+            {/* Current Module Section */}
             <Card className="shadow-4dp">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
@@ -188,8 +185,11 @@ const CourseDashboard = () => {
                     <h3 className="text-xl font-heading font-semibold mb-2">
                       Current Module: {course.currentModule.name}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground mb-2">
                       {course.currentModule.currentChapter}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Next: {course.currentModule.isJustStarting ? 'Introduction Video - Watch to get started' : 'Live Class: React Fundamentals - Tomorrow at 2:00 PM'}
                     </p>
                   </div>
                   <Button asChild>
@@ -205,9 +205,9 @@ const CourseDashboard = () => {
                     <span className="text-sm font-medium">Module Progress</span>
                     <span className="text-sm text-muted-foreground">65%</span>
                   </div>
-                  <div className="bg-primary-light rounded-full h-2">
+                  <div className="progress-bg rounded-full h-2">
                     <div 
-                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      className="progress-fill h-2 rounded-full transition-all duration-300"
                       style={{ width: '65%' }}
                     />
                   </div>
@@ -230,7 +230,7 @@ const CourseDashboard = () => {
                   <div className="space-y-4">
                     {course.upcomingItems.map((item, index) => (
                       <div key={item.id}>
-                        <div className="flex items-start gap-4 p-4 rounded-lg">
+                        <div className="flex items-start gap-4 p-4">
                           <div className="flex-shrink-0 mt-1">
                             {getItemIcon(item.type)}
                           </div>
@@ -243,7 +243,7 @@ const CourseDashboard = () => {
                                   item.type === 'class' 
                                     ? 'bg-secondary-light text-foreground border-secondary-light' 
                                     : item.type === 'assessment'
-                                    ? 'bg-accent-light text-foreground border-accent-light'
+                                    ? 'bg-warning-light text-foreground border-warning-light'
                                     : 'bg-info-light text-foreground border-info-light'
                                 }`}
                               >

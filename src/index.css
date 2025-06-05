@@ -240,6 +240,9 @@
   .shadow-warning { box-shadow: var(--shadow-warning); }
   .shadow-error { box-shadow: var(--shadow-error); }
   .shadow-info { box-shadow: var(--shadow-info); }
+
+  .progress-bg { background-color: hsl(var(--progress-bg)); }
+  .progress-fill { background-color: hsl(var(--progress-fill)); }
 }
 
 @layer base {
@@ -249,10 +252,30 @@
 
   body {
     @apply bg-background text-foreground font-body;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+    line-height: 1.7;
+  }
+
+  h1 { font-size: 3.2rem; } /* 18 * 1.333^4 */
+  h2 { font-size: 2.4rem; } /* 18 * 1.333^3 */
+  h3 { font-size: 1.8rem; } /* 18 * 1.333^2 */
+  h4 { font-size: 1.35rem; } /* 18 * 1.333 */
+  h5 { font-size: 1.125rem; } /* 18px base */
+  h6 { font-size: 1rem; } /* 16px */
+
+  .text-sm {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.7;
+  }
+
+  .text-xs {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.7;
   }
 
   code, pre {

@@ -3,9 +3,8 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Clock, Calendar, BookOpen, Users, Play, RotateCcw, CheckCircle, Video, FileText } from "lucide-react";
+import { Play, RotateCcw, CheckCircle, Video, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mockStudent, mockCourses, Course } from "@/lib/mockData";
 import Header from "@/components/Header";
@@ -63,7 +62,7 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background mb-12">
       <Header />
       <div className="container mx-auto px-6 py-8 max-w-6xl">
         {/* Welcome Message */}
@@ -86,7 +85,7 @@ const StudentDashboard = () => {
               variant={filter === 'enrolled' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setFilter('enrolled')}
-              className="rounded-full"
+              className="rounded-full hover:bg-primary-light hover:text-foreground"
             >
               Enrolled
             </Button>
@@ -94,7 +93,7 @@ const StudentDashboard = () => {
               variant={filter === 'completed' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setFilter('completed')}
-              className="rounded-full"
+              className="rounded-full hover:bg-primary-light hover:text-foreground"
             >
               Completed
             </Button>
@@ -147,9 +146,9 @@ const StudentDashboard = () => {
                     <span className="text-sm font-medium">Progress</span>
                     <span className="text-sm text-muted-foreground">{course.progress}%</span>
                   </div>
-                  <div className="bg-primary-light rounded-full h-2">
+                  <div className="progress-bg rounded-full h-2">
                     <div 
-                      className="bg-primary h-2 rounded-full transition-all duration-300"
+                      className="progress-fill h-2 rounded-full transition-all duration-300"
                       style={{ width: `${course.progress}%` }}
                     />
                   </div>
@@ -164,9 +163,17 @@ const StudentDashboard = () => {
                     {course.upcomingItems.slice(0, 3).map((item) => (
                       <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg">
                         <div className="flex-shrink-0 mt-1">
-                          {item.type === 'class' && <Video className="w-4 h-4 text-primary" />}
-                          {item.type === 'assessment' && <BookOpen className="w-4 h-4 text-accent" />}
-                          {item.type === 'assignment' && <FileText className="w-4 h-4 text-secondary" />}
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                            item.type === 'class' 
+                              ? 'bg-secondary-light' 
+                              : item.type === 'assessment'
+                              ? 'bg-warning-light'
+                              : 'bg-info-light'
+                          }`}>
+                            {item.type === 'class' && <Video className="w-4 h-4 text-secondary" />}
+                            {item.type === 'assessment' && <FileText className="w-4 h-4 text-warning" />}
+                            {item.type === 'assignment' && <FileText className="w-4 h-4 text-info" />}
+                          </div>
                         </div>
                         <div className="flex-1">
                           <div className="flex items-start justify-between gap-2 mb-1">
@@ -179,7 +186,7 @@ const StudentDashboard = () => {
                                 item.type === 'class' 
                                   ? 'bg-secondary-light text-foreground border-secondary-light' 
                                   : item.type === 'assessment'
-                                  ? 'bg-accent-light text-foreground border-accent-light'
+                                  ? 'bg-warning-light text-foreground border-warning-light'
                                   : 'bg-info-light text-foreground border-info-light'
                               }`}
                             >
