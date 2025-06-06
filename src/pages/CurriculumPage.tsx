@@ -164,6 +164,30 @@ const CurriculumPage = () => {
       }
     }
 
+    if (type === 'video') {
+      if (status === 'completed') {
+        return <Badge variant="outline" className="text-success border-success">Watched</Badge>;
+      } else {
+        return <Badge variant="outline" className="text-muted-foreground">Not Watched</Badge>;
+      }
+    }
+
+    if (type === 'article') {
+      if (status === 'completed') {
+        return <Badge variant="outline" className="text-success border-success">Read</Badge>;
+      } else {
+        return <Badge variant="outline" className="text-muted-foreground">Not Started</Badge>;
+      }
+    }
+
+    if (type === 'feedback') {
+      if (status === 'completed') {
+        return <Badge variant="outline" className="text-success border-success">Feedback Shared</Badge>;
+      } else {
+        return <Badge variant="outline" className="text-muted-foreground">Not Started</Badge>;
+      }
+    }
+
     switch (status) {
       case 'completed':
         return <Badge variant="outline" className="text-success border-success">Completed</Badge>;
@@ -191,16 +215,6 @@ const CurriculumPage = () => {
     if (minutes > 0) return `Starts in ${minutes} minute${minutes > 1 ? 's' : ''}`;
     
     return "Starting soon";
-  };
-
-  const formatDueDate = (date: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    }).format(date);
   };
 
   const formatScheduledDate = (date: Date) => {
@@ -245,33 +259,6 @@ const CurriculumPage = () => {
       }
     });
 
-    // Add additional videos and articles for Module 1, Topic 1
-    if (moduleId === "1" && topic.id === "1") {
-      enhancedItems.push(
-        {
-          id: "video-1",
-          title: "Introduction to React Components",
-          type: "video" as const,
-          status: "not-started" as const,
-          duration: "15 min"
-        },
-        {
-          id: "article-1", 
-          title: "Understanding JSX Syntax",
-          type: "article" as const,
-          status: "not-started" as const,
-          duration: "8 min read"
-        },
-        {
-          id: "video-2",
-          title: "Props and State Management",
-          type: "video" as const,
-          status: "completed" as const,
-          duration: "22 min"
-        }
-      );
-    }
-
     return enhancedItems;
   };
 
@@ -293,8 +280,12 @@ const CurriculumPage = () => {
         const canJoin = new Date() >= tenMinutesBefore;
         
         return (
-          <Button size="sm" disabled={!canJoin} className={canJoin ? "" : "opacity-50"}>
-            {canJoin ? "Join Class" : "Join Class"}
+          <Button 
+            size="sm" 
+            disabled={!canJoin} 
+            className={canJoin ? "" : "opacity-50 cursor-not-allowed"}
+          >
+            Join Class
           </Button>
         );
       } else if (item.status === 'completed') {
@@ -305,7 +296,7 @@ const CurriculumPage = () => {
     if (isRecording) {
       if (item.status === 'completed') {
         return (
-          <Button size="sm" variant="outline" asChild>
+          <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground" asChild>
             <Link to={`/content/${item.type}/${item.id}`}>
               <Play className="w-4 h-4 mr-2" />
               Watch Recording
@@ -323,7 +314,7 @@ const CurriculumPage = () => {
 
     if (isVideo) {
       return (
-        <Button size="sm" variant="outline" className="bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90" asChild>
+        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground" asChild>
           <Link to={`/content/${item.type}/${item.id}`}>
             <Play className="w-4 h-4 mr-2" />
             {item.status === 'completed' ? 'Watch Again' : 'Watch Video'}
@@ -334,7 +325,7 @@ const CurriculumPage = () => {
 
     if (isArticle) {
       return (
-        <Button size="sm" variant="outline" className="bg-secondary text-secondary-foreground border-secondary hover:bg-secondary/90" asChild>
+        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground" asChild>
           <Link to={`/content/${item.type}/${item.id}`}>
             <FileText className="w-4 h-4 mr-2" />
             {item.status === 'completed' ? 'Read Again' : 'Read Article'}
@@ -366,8 +357,7 @@ const CurriculumPage = () => {
     }
 
     if (isFeedback) {
-      // Check if all preceding items are completed (simplified logic)
-      const canGiveFeedback = true; // In real app, check completion status
+      const canGiveFeedback = true; // Simplified logic for demo
       
       if (!canGiveFeedback) {
         return null;
@@ -391,7 +381,7 @@ const CurriculumPage = () => {
           
           <div className="flex-1 min-w-0">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-4 mb-3">
-              <h3 className="text-base md:text-lg font-medium">
+              <h3 className="text-base md:text-lg font-medium break-words">
                 {item.type === 'live-class' ? `Live Class: ${item.title}` :
                  item.type === 'recording' ? `Recording: ${item.title}` :
                  item.type === 'video' ? `Video: ${item.title}` :
@@ -407,7 +397,7 @@ const CurriculumPage = () => {
             </div>
             
             {item.description && (
-              <p className="text-sm text-muted-foreground mb-3">
+              <p className="text-sm text-muted-foreground mb-3 break-words">
                 {item.description}
               </p>
             )}
@@ -415,29 +405,19 @@ const CurriculumPage = () => {
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-sm text-muted-foreground mb-4">
               {item.duration && (
                 <div className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  {item.duration}
+                  <Clock className="w-4 h-4 flex-shrink-0" />
+                  <span>{item.duration}</span>
                 </div>
               )}
               {item.scheduledDateTime && (
                 <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  {formatScheduledDate(item.scheduledDateTime)}
-                </div>
-              )}
-              {item.dueDate && (
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  Due: {formatDueDate(item.dueDate)}
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <span>{formatScheduledDate(item.scheduledDateTime)}</span>
                 </div>
               )}
             </div>
 
-            <div className="flex items-center justify-between">
-              <Badge variant="outline" className="capitalize">
-                {item.type.replace('-', ' ')}
-              </Badge>
-              
+            <div className="flex items-center justify-end">
               <div className="flex gap-2">
                 {getActionButton(item)}
               </div>
@@ -456,7 +436,7 @@ const CurriculumPage = () => {
         {!isMobile && (
           <div className="w-80 bg-card border-r border-border shadow-4dp">
             <div className="p-6 border-b border-border">
-              <Button variant="ghost" size="sm" asChild className="mb-4 hover:bg-transparent">
+              <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:no-underline">
                 <Link to={`/course/${courseId}`}>
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Course
@@ -472,7 +452,7 @@ const CurriculumPage = () => {
                   <div key={module.id} className="space-y-2">
                     <Button
                       variant="ghost"
-                      className="w-full justify-between text-left h-auto p-3 hover:bg-primary-light"
+                      className="w-full justify-between text-left h-auto p-3 hover:bg-primary-light hover:text-foreground"
                       onClick={() => toggleModule(module.id)}
                     >
                       <div>
@@ -495,7 +475,7 @@ const CurriculumPage = () => {
                             key={topic.id}
                             variant={selectedModule === module.id && selectedTopic === topic.id ? "secondary" : "ghost"}
                             size="sm"
-                            className="w-full justify-start text-left hover:bg-secondary-light"
+                            className="w-full justify-start text-left hover:bg-secondary-light hover:text-foreground"
                             onClick={() => handleTopicSelect(module.id, topic.id)}
                           >
                             {topic.name}

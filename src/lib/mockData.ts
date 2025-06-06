@@ -1,4 +1,3 @@
-
 export interface Student {
   id: string;
   name: string;
@@ -178,13 +177,13 @@ export const mockCourses: Course[] = [
       ]
     },
     currentModule: {
-      id: "3",
-      name: "Advanced React Concepts",
-      currentChapter: "Custom Hooks and Context API",
-      currentItem: "Creating Custom Hooks",
+      id: "1",
+      name: "JavaScript Fundamentals",
+      currentChapter: "Introduction to JavaScript & Setup",
+      currentItem: "Introduction to JavaScript",
       nextItem: {
-        type: "video",
-        name: "Creating Custom Hooks",
+        type: "live-class",
+        name: "What is JavaScript? History, Use Cases & Setting up Your Development Environment",
         scheduledTime: "Available now"
       },
       isJustStarting: false
@@ -196,63 +195,248 @@ export const mockCourses: Course[] = [
         topics: [
           {
             id: "1",
-            name: "ES6+ Features",
-            description: "Learn modern JavaScript features including arrow functions, template literals, destructuring, and more.",
+            name: "Introduction to JavaScript & Setup",
+            description: "Learn the absolute basics of JavaScript and set up your development environment",
             items: [
               {
                 id: "1-1-1",
                 type: 'live-class',
-                title: "Introduction to ES6",
+                title: "What is JavaScript? History, Use Cases & Setting up Your Development Environment",
                 status: 'completed',
                 duration: "90 min",
                 scheduledDateTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
                 meetLink: "https://meet.google.com/abc-defg-hij",
-                attendanceStatus: 'present'
-              },
-              {
-                id: "1-1-1-rec",
-                type: 'recording',
-                title: "Introduction to ES6",
-                status: 'completed',
-                duration: "90 min"
+                attendanceStatus: 'present',
+                description: "Introduction to JavaScript fundamentals and development environment setup"
               },
               {
                 id: "1-1-2",
                 type: 'video',
-                title: "Arrow Functions and Template Literals",
+                title: "Installing Node.js and npm",
                 status: 'completed',
-                duration: "25 min",
+                duration: "15 min",
                 watchStatus: 'watched'
               },
               {
                 id: "1-1-3",
+                type: 'video',
+                title: "VS Code setup for JavaScript development",
+                status: 'completed',
+                duration: "12 min",
+                watchStatus: 'watched'
+              },
+              {
+                id: "1-1-4",
                 type: 'article',
-                title: "Understanding Destructuring",
+                title: "The History of JavaScript",
+                status: 'completed',
+                duration: "6 min read",
+                readStatus: 'read'
+              },
+              {
+                id: "1-1-5",
+                type: 'article',
+                title: "Why Learn JavaScript in 2025?",
                 status: 'completed',
                 duration: "8 min read",
                 readStatus: 'read'
               },
               {
-                id: "1-1-4",
+                id: "1-1-6",
                 type: 'assignment',
-                title: "ES6 Practice Exercises",
+                title: "Setup your Development Environment",
                 status: 'completed',
-                description: "Complete a series of JavaScript exercises using ES6 features"
+                description: "Setup your development environment and write a 'Hello, World!' program in JavaScript"
+              },
+              {
+                id: "1-1-7",
+                type: 'assessment',
+                title: "JavaScript Basics and Environment Setup",
+                status: 'completed',
+                description: "Quiz on JavaScript basics and environment setup",
+                duration: "30 min"
               }
             ]
           },
           {
             id: "2",
-            name: "Async JavaScript",
-            description: "Master asynchronous programming with promises, async/await, and error handling.",
+            name: "Variables, Data Types & Operators",
+            description: "Master JavaScript variables, primitive data types, and various operators",
             items: [
               {
                 id: "1-2-1",
-                type: 'video',
-                title: "Promises and Async/Await",
+                type: 'live-class',
+                title: "Understanding var, let, const; Primitive Data Types; Operators",
                 status: 'completed',
-                duration: "30 min",
-                watchStatus: 'watched'
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+                attendanceStatus: 'present',
+                description: "Deep dive into JavaScript variables, data types, and operators"
+              },
+              {
+                id: "1-2-2",
+                type: 'video',
+                title: "Deep dive into JavaScript data types",
+                status: 'in-progress',
+                duration: "20 min",
+                watchStatus: 'not-watched'
+              },
+              {
+                id: "1-2-3",
+                type: 'video',
+                title: "Practical examples of operators",
+                status: 'not-started',
+                duration: "18 min",
+                watchStatus: 'not-watched'
+              },
+              {
+                id: "1-2-4",
+                type: 'article',
+                title: "JavaScript Naming Conventions",
+                status: 'not-started',
+                duration: "5 min read",
+                readStatus: 'not-started'
+              },
+              {
+                id: "1-2-5",
+                type: 'article',
+                title: "Type Coercion in JavaScript",
+                status: 'not-started',
+                duration: "7 min read",
+                readStatus: 'not-started'
+              },
+              {
+                id: "1-2-6",
+                type: 'assignment',
+                title: "Simple Calculator Script",
+                status: 'not-started',
+                description: "Create a simple calculator script that uses various data types and operators"
+              },
+              {
+                id: "1-2-7",
+                type: 'assessment',
+                title: "Variable Manipulation Challenge",
+                status: 'not-started',
+                description: "Coding challenge involving variable manipulation and operator usage",
+                duration: "45 min"
+              }
+            ]
+          },
+          {
+            id: "3",
+            name: "Control Flow - Conditional Statements & Loops",
+            description: "Learn to control program flow with conditionals and loops",
+            items: [
+              {
+                id: "1-3-1",
+                type: 'live-class',
+                title: "if/else statements, switch statements; for, while, do...while loops",
+                status: 'not-started',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                description: "Master control flow with conditional statements and various loop types"
+              },
+              {
+                id: "1-3-2",
+                type: 'video',
+                title: "Mastering loops in JavaScript",
+                status: 'not-started',
+                duration: "25 min"
+              },
+              {
+                id: "1-3-3",
+                type: 'video',
+                title: "Conditional logic best practices",
+                status: 'not-started',
+                duration: "22 min"
+              },
+              {
+                id: "1-3-4",
+                type: 'article',
+                title: "Ternary Operator for concise conditionals",
+                status: 'not-started',
+                duration: "6 min read"
+              },
+              {
+                id: "1-3-5",
+                type: 'article',
+                title: "Common pitfalls with loops",
+                status: 'not-started',
+                duration: "8 min read"
+              },
+              {
+                id: "1-3-6",
+                type: 'assignment',
+                title: "FizzBuzz Challenge",
+                status: 'not-started',
+                description: "Write a script that prints numbers 1-100, but prints 'Fizz' for multiples of 3, 'Buzz' for multiples of 5"
+              },
+              {
+                id: "1-3-7",
+                type: 'assessment',
+                title: "Control Flow Quiz",
+                status: 'not-started',
+                description: "Quiz on control flow statements",
+                duration: "35 min"
+              }
+            ]
+          },
+          {
+            id: "4",
+            name: "Functions & Scope",
+            description: "Understand function declarations, scope, and advanced function concepts",
+            items: [
+              {
+                id: "1-4-1",
+                type: 'live-class',
+                title: "Declaring functions; Parameters and arguments; Return values; Scope",
+                status: 'not-started',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+                description: "Learn function declarations, expressions, arrow functions, and scope concepts"
+              },
+              {
+                id: "1-4-2",
+                type: 'video',
+                title: "Understanding 'this' keyword in functions",
+                status: 'not-started',
+                duration: "28 min"
+              },
+              {
+                id: "1-4-3",
+                type: 'video',
+                title: "Closures explained simply",
+                status: 'not-started',
+                duration: "24 min"
+              },
+              {
+                id: "1-4-4",
+                type: 'article',
+                title: "Hoisting in JavaScript",
+                status: 'not-started',
+                duration: "10 min read"
+              },
+              {
+                id: "1-4-5",
+                type: 'article',
+                title: "IIFE (Immediately Invoked Function Expressions)",
+                status: 'not-started',
+                duration: "8 min read"
+              },
+              {
+                id: "1-4-6",
+                type: 'assignment',
+                title: "Utility Functions Collection",
+                status: 'not-started',
+                description: "Create a set of utility functions (e.g., capitalize string, find max number in array)"
+              },
+              {
+                id: "1-4-7",
+                type: 'assessment',
+                title: "Function Scope Debugging",
+                status: 'not-started',
+                description: "Debugging exercises involving function scope and return values",
+                duration: "40 min"
               }
             ]
           }
@@ -260,29 +444,64 @@ export const mockCourses: Course[] = [
       },
       {
         id: "2",
-        name: "React Fundamentals",
+        name: "DOM Manipulation & Events",
         topics: [
           {
             id: "1",
-            name: "Getting Started with React",
-            description: "Introduction to React library, JSX, and creating your first React application.",
+            name: "Introduction to the DOM",
+            description: "Learn about the Document Object Model and how to select elements",
             items: [
               {
                 id: "2-1-1",
-                type: 'video',
-                title: "What is React?",
-                status: 'completed',
-                duration: "20 min",
-                watchStatus: 'watched'
+                type: 'live-class',
+                title: "What is the DOM? Document tree; Selecting elements",
+                status: 'not-started',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                description: "Introduction to DOM concepts and element selection methods"
               },
               {
                 id: "2-1-2",
-                type: 'live-class',
-                title: "Setting up React Environment",
-                status: 'completed',
-                duration: "90 min",
-                meetLink: "https://meet.google.com/react-setup-123",
-                attendanceStatus: 'present'
+                type: 'video',
+                title: "Visualizing the DOM tree",
+                status: 'not-started',
+                duration: "15 min"
+              },
+              {
+                id: "2-1-3",
+                type: 'video',
+                title: "Different ways to select elements",
+                status: 'not-started',
+                duration: "20 min"
+              },
+              {
+                id: "2-1-4",
+                type: 'article',
+                title: "Understanding Nodes in the DOM",
+                status: 'not-started',
+                duration: "8 min read"
+              },
+              {
+                id: "2-1-5",
+                type: 'article',
+                title: "Best practices for DOM element selection",
+                status: 'not-started',
+                duration: "6 min read"
+              },
+              {
+                id: "2-1-6",
+                type: 'assignment',
+                title: "DOM Element Selection Practice",
+                status: 'not-started',
+                description: "Create a simple HTML page and use JavaScript to select various elements"
+              },
+              {
+                id: "2-1-7",
+                type: 'assessment',
+                title: "DOM Concepts Quiz",
+                status: 'not-started',
+                description: "Quiz on DOM concepts and selectors",
+                duration: "30 min"
               }
             ]
           }
@@ -290,53 +509,65 @@ export const mockCourses: Course[] = [
       },
       {
         id: "3",
-        name: "Advanced React Concepts",
+        name: "Asynchronous JavaScript & APIs",
         topics: [
           {
             id: "1",
-            name: "Custom Hooks and Context API",
-            description: "Learn to create reusable logic with custom hooks and manage global state with Context API.",
+            name: "Understanding Asynchronous JavaScript",
+            description: "Learn the fundamentals of asynchronous programming in JavaScript",
             items: [
               {
                 id: "3-1-1",
-                type: 'video',
-                title: "Creating Custom Hooks",
-                status: 'in-progress',
-                duration: "35 min",
-                watchStatus: 'not-watched'
-              },
-              {
-                id: "3-1-2",
                 type: 'live-class',
-                title: "Context API Deep Dive",
+                title: "Synchronous vs. Asynchronous programming; The Event Loop",
                 status: 'not-started',
                 duration: "90 min",
-                scheduledDateTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
-                meetLink: "https://meet.google.com/context-api-456"
-              },
+                scheduledDateTime: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+                description: "Understanding asynchronous concepts and the event loop"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "4",
+        name: "Introduction to Node.js & Express.js",
+        topics: [
+          {
+            id: "1",
+            name: "Introduction to Node.js",
+            description: "Step into server-side JavaScript with Node.js",
+            items: [
               {
-                id: "3-1-3",
-                type: 'assignment',
-                title: "Build a Theme Switcher",
+                id: "4-1-1",
+                type: 'live-class',
+                title: "What is Node.js? Node.js architecture; npm",
                 status: 'not-started',
-                description: "Create a theme switcher using Context API and custom hooks",
-                dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-              },
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 21 * 24 * 60 * 60 * 1000),
+                description: "Introduction to Node.js and server-side JavaScript"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "5",
+        name: "Building a Full Stack Application & Review",
+        topics: [
+          {
+            id: "1",
+            name: "Connecting Front-end to Back-end",
+            description: "Learn to connect your frontend and backend applications",
+            items: [
               {
-                id: "3-1-4",
-                type: 'assessment',
-                title: "React Advanced Concepts Quiz",
+                id: "5-1-1",
+                type: 'live-class',
+                title: "Making API calls from your front-end to your Express back-end",
                 status: 'not-started',
-                description: "Test your understanding of hooks, context, and performance optimization",
-                duration: "45 min",
-                scheduledDateTime: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000)
-              },
-              {
-                id: "3-1-5",
-                type: 'feedback',
-                title: "Module Feedback",
-                status: 'not-started',
-                description: "Share your feedback about the Advanced React Concepts module"
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 28 * 24 * 60 * 60 * 1000),
+                description: "Connect frontend and backend with API calls and handle CORS"
               }
             ]
           }
@@ -382,6 +613,20 @@ export const mockCourses: Course[] = [
           status: 'attended',
           date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
           instructor: "Prof. Michael Rodriguez"
+        },
+        {
+          id: "2", 
+          name: "Android Studio Setup",
+          status: 'attended',
+          date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+          instructor: "Prof. Michael Rodriguez"
+        },
+        {
+          id: "3",
+          name: "Variables and Data Types",
+          status: 'absent',
+          date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          instructor: "Prof. Michael Rodriguez"
         }
       ]
     },
@@ -405,7 +650,7 @@ export const mockCourses: Course[] = [
           {
             id: "1",
             name: "Kotlin Basics",
-            description: "Introduction to Kotlin programming language and its syntax.",
+            description: "Introduction to Kotlin programming language and its syntax",
             items: [
               {
                 id: "1-1-1",
@@ -413,7 +658,88 @@ export const mockCourses: Course[] = [
                 title: "Introduction to Kotlin",
                 status: 'completed',
                 duration: "90 min",
-                attendanceStatus: 'present'
+                scheduledDateTime: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+                attendanceStatus: 'present',
+                description: "Learn Kotlin syntax and basic programming concepts"
+              },
+              {
+                id: "1-1-2",
+                type: 'video',
+                title: "Kotlin vs Java",
+                status: 'completed',
+                duration: "15 min",
+                watchStatus: 'watched'
+              },
+              {
+                id: "1-1-3",
+                type: 'article',
+                title: "Kotlin Best Practices",
+                status: 'completed',
+                duration: "8 min read",
+                readStatus: 'read'
+              },
+              {
+                id: "1-1-4",
+                type: 'assignment',
+                title: "Basic Kotlin Programs",
+                status: 'completed',
+                description: "Write basic Kotlin programs to practice syntax"
+              },
+              {
+                id: "1-1-5",
+                type: 'assessment',
+                title: "Kotlin Fundamentals Quiz",
+                status: 'completed',
+                description: "Test your knowledge of Kotlin basics",
+                duration: "30 min"
+              }
+            ]
+          },
+          {
+            id: "2",
+            name: "Object-Oriented Programming in Kotlin",
+            description: "Learn OOP concepts in Kotlin including classes, objects, and inheritance",
+            items: [
+              {
+                id: "1-2-1",
+                type: 'live-class',
+                title: "Classes and Objects in Kotlin",
+                status: 'completed',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+                attendanceStatus: 'present',
+                description: "Deep dive into OOP concepts in Kotlin"
+              },
+              {
+                id: "1-2-2",
+                type: 'video',
+                title: "Inheritance and Polymorphism",
+                status: 'in-progress',
+                duration: "25 min",
+                watchStatus: 'not-watched'
+              },
+              {
+                id: "1-2-3",
+                type: 'article',
+                title: "Data Classes in Kotlin",
+                status: 'not-started',
+                duration: "10 min read",
+                readStatus: 'not-started'
+              },
+              {
+                id: "1-2-4",
+                type: 'assignment',
+                title: "OOP Practice Project",
+                status: 'not-started',
+                description: "Create a small project using OOP principles in Kotlin"
+              },
+              {
+                id: "1-2-5",
+                type: 'assessment',
+                title: "OOP Concepts Test",
+                status: 'not-started',
+                description: "Assessment on object-oriented programming in Kotlin",
+                duration: "45 min"
               }
             ]
           }
@@ -426,15 +752,77 @@ export const mockCourses: Course[] = [
           {
             id: "1",
             name: "Layouts and Views",
-            description: "Learn about different layout types and view components in Android.",
+            description: "Learn about different layout types and view components in Android",
             items: [
               {
                 id: "2-1-1",
+                type: 'live-class',
+                title: "Activity Lifecycle",
+                status: 'not-started',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+                description: "Understanding Android activity lifecycle and state management"
+              },
+              {
+                id: "2-1-2",
                 type: 'video',
                 title: "Linear and Relative Layouts",
-                status: 'in-progress',
+                status: 'not-started',
                 duration: "30 min",
                 watchStatus: 'not-watched'
+              },
+              {
+                id: "2-1-3",
+                type: 'video',
+                title: "ConstraintLayout Basics",
+                status: 'not-started',
+                duration: "25 min",
+                watchStatus: 'not-watched'
+              },
+              {
+                id: "2-1-4",
+                type: 'article',
+                title: "Android UI Design Principles",
+                status: 'not-started',
+                duration: "12 min read",
+                readStatus: 'not-started'
+              },
+              {
+                id: "2-1-5",
+                type: 'assignment',
+                title: "Layout Design Challenge",
+                status: 'not-started',
+                description: "Create different layouts using various layout managers"
+              },
+              {
+                id: "2-1-6",
+                type: 'assessment',
+                title: "UI Components Quiz",
+                status: 'not-started',
+                description: "Test your knowledge of Android UI components",
+                duration: "35 min"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: "3",
+        name: "Android Components",
+        topics: [
+          {
+            id: "1",
+            name: "Activities and Intents",
+            description: "Master Android activities and intent system",
+            items: [
+              {
+                id: "3-1-1",
+                type: 'live-class',
+                title: "Understanding Activities and Intents",
+                status: 'not-started',
+                duration: "90 min",
+                scheduledDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                description: "Learn about Android activities and the intent system"
               }
             ]
           }

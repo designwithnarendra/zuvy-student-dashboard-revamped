@@ -3,12 +3,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { mockCourses } from "@/lib/mockData";
 
 const Header = () => {
   const [isDark, setIsDark] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { courseId } = useParams();
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -25,15 +27,58 @@ const Header = () => {
     }
   };
 
+  const handleDashboardClick = () => {
+    const enrolledCourses = mockCourses.filter(course => course.status === 'enrolled');
+    
+    if (enrolledCourses.length === 1) {
+      navigate(`/course/${enrolledCourses[0].id}`);
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  const handleCurriculumClick = () => {
+    if (courseId) {
+      navigate(`/course/${courseId}/curriculum`);
+    }
+  };
+
+  // Check if we're on a course-related page
+  const isOnCoursePage = location.pathname.includes('/course/');
+
   return (
     <header className="w-full h-16 px-6 flex items-center justify-between bg-background/80 backdrop-blur-md border-b border-border/50 shadow-4dp sticky top-0 z-50">
-      {/* Left - Logo */}
-      <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
-        <img 
-          src="/lovable-uploads/e9f9f8b0-7112-47b9-8664-85f7a8319bb5.png" 
-          alt="Zuvy" 
-          className="h-10"
-        />
+      {/* Left - Logo and Navigation */}
+      <div className="flex items-center gap-4">
+        <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
+          <img 
+            src="/lovable-uploads/e9f9f8b0-7112-47b9-8664-85f7a8319bb5.png" 
+            alt="Zuvy" 
+            className="h-10"
+          />
+        </div>
+
+        {/* Course Navigation Buttons */}
+        {isOnCoursePage && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="link"
+              size="sm"
+              onClick={handleDashboardClick}
+              className="text-foreground hover:text-primary"
+            >
+              Dashboard
+            </Button>
+            <Button
+              variant="link"
+              size="sm"
+              onClick={handleCurriculumClick}
+              className="text-foreground hover:text-primary"
+            >
+              Curriculum
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Right - Theme Switch and Avatar */}
