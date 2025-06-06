@@ -3,19 +3,32 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { mockCourses } from "@/lib/mockData";
 
 const Header = () => {
   const [isDark, setIsDark] = useState(false);
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setIsDark(!isDark);
     document.documentElement.classList.toggle('dark');
   };
 
+  const handleLogoClick = () => {
+    const enrolledCourses = mockCourses.filter(course => course.status === 'enrolled');
+    
+    if (enrolledCourses.length === 1) {
+      navigate(`/course/${enrolledCourses[0].id}`);
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
   return (
     <header className="w-full h-16 px-6 flex items-center justify-between bg-background/80 backdrop-blur-md border-b border-border/50 shadow-4dp sticky top-0 z-50">
       {/* Left - Logo */}
-      <div className="flex items-center">
+      <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
         <img 
           src="/lovable-uploads/e9f9f8b0-7112-47b9-8664-85f7a8319bb5.png" 
           alt="Zuvy" 
@@ -34,7 +47,7 @@ const Header = () => {
           {isDark ? (
             <Sun className="h-4 w-4" />
           ) : (
-            <Moon className="h-4 h-4" />
+            <Moon className="h-4 w-4" />
           )}
         </Button>
         

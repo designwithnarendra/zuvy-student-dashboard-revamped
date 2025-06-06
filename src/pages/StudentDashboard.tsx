@@ -64,7 +64,7 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen bg-background mb-12">
       <Header />
-      <div className="container mx-auto px-6 py-8 max-w-6xl">
+      <div className="container mx-auto px-4 md:px-6 py-8 max-w-6xl">
         {/* Welcome Message */}
         <div className="mb-8">
           <h1 className="text-3xl font-heading font-bold mb-2">
@@ -101,7 +101,7 @@ const StudentDashboard = () => {
         </div>
 
         {/* Course Cards */}
-        <div className="space-y-6">
+        <div className="space-y-6 mb-12">
           {filteredCourses.map((course) => (
             <Card key={course.id} className="w-full shadow-4dp hover:shadow-8dp transition-shadow duration-200">
               <CardContent className="p-6">

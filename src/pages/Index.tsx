@@ -7,18 +7,17 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Simulate checking user enrollment
+    // Filter enrolled courses
     const enrolledCourses = mockCourses.filter(course => course.status === 'enrolled');
     
     if (enrolledCourses.length === 1) {
       // If enrolled in single course, go directly to course page
       navigate(`/course/${enrolledCourses[0].id}`);
-    } else if (enrolledCourses.length > 1) {
+    } else if (enrolledCourses.length >= 2) {
       // If enrolled in multiple courses, go to student dashboard
       navigate('/dashboard');
     } else {
-      // If no enrolled courses, stay on this page (could be a landing page)
-      // For demo purposes, we'll redirect to dashboard anyway
+      // If no enrolled courses, go to dashboard anyway for demo
       navigate('/dashboard');
     }
   }, [navigate]);

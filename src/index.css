@@ -24,13 +24,13 @@
     
     /* Primary Brand Colors - The neural network inspired blue with variants */
     --primary: 221.2 83.2% 53.3%;     /* #3b82f6 - Blue that stimulates focus and cognitive processing */
-    --primary-light: 221.2 83.2% 73.3%; /* #7dd3fc - Lighter blue for subtle backgrounds and hover states */
+    --primary-light: 221.2 83.2% 95%; /* Much lighter blue for subtle backgrounds */
     --primary-dark: 221.2 83.2% 33.3%;  /* #1e40af - Darker blue for emphasis and active states */
     --primary-foreground: 210 20% 98%; /* Light text on primary backgrounds for accessibility */
     
     /* Secondary Brand Colors - Warm orange-coral that complements blue beautifully */
     --secondary: 24.6 95% 53.1%;      /* #f97316 - Warm orange-coral for dynamic contrast with blue */
-    --secondary-light: 24.6 95% 73.1%; /* #fed7aa - Light orange for subtle highlights and backgrounds */
+    --secondary-light: 24.6 95% 95%;  /* Much lighter orange for subtle backgrounds */
     --secondary-dark: 24.6 95% 33.1%;  /* #c2410c - Dark orange for strong emphasis and active states */
     --secondary-foreground: 210 20% 98%; /* Light text maintains readability on orange backgrounds */
     
@@ -42,13 +42,13 @@
     
     /* Accent Colors - The energizing cyan for highlights and CTAs with variants */
     --accent: 198.6 88.7% 48.4%;      /* #06b6d4 - Cyan that maintains alertness without overstimulation */
-    --accent-light: 198.6 88.7% 68.4%; /* #67e8f9 - Light cyan for subtle accents and backgrounds */
+    --accent-light: 198.6 88.7% 95%;  /* Much lighter cyan for subtle backgrounds */
     --accent-dark: 198.6 88.7% 28.4%;  /* #0891b2 - Dark cyan for strong emphasis and depth */
     --accent-foreground: 210 20% 98%; /* Light text on accent backgrounds */
     
     /* Destructive/Error Colors - Clear feedback without harsh alarm, with variants */
     --destructive: 0 84.2% 60.2%;     /* #ef4444 - Clear but not aggressive red for errors */
-    --destructive-light: 0 84.2% 80.2%; /* #fecaca - Light red for subtle error backgrounds */
+    --destructive-light: 0 84.2% 95%; /* Much lighter red for subtle backgrounds */
     --destructive-dark: 0 84.2% 40.2%;  /* #dc2626 - Dark red for strong error emphasis */
     --destructive-foreground: 210 20% 98%; /* Light text on error backgrounds */
     
@@ -62,24 +62,24 @@
 
     /* Success Colors - For achievements and positive feedback with variants */
     --success: 160 84.1% 39.4%;        /* #10b981 - Green that celebrates accomplishment */
-    --success-light: 160 84.1% 59.4%;  /* #34d399 - Light green for subtle success indicators */
+    --success-light: 160 84.1% 95%;    /* Much lighter green for subtle backgrounds */
     --success-dark: 160 84.1% 19.4%;   /* #065f46 - Dark green for strong success emphasis */
     --success-foreground: 0 0% 98%;    /* Light text on success backgrounds */
     
     /* Warning Colors - For important notices and alerts with variants */
     --warning: 45.4 93.4% 47.5%;       /* #f59e0b - Amber that draws attention without alarm */
-    --warning-light: 45.4 93.4% 67.5%; /* #fde047 - Light amber for subtle warning backgrounds */
+    --warning-light: 45.4 93.4% 95%;   /* Much lighter amber for subtle backgrounds */
     --warning-dark: 45.4 93.4% 27.5%;  /* #d97706 - Dark amber for strong warning emphasis */
     --warning-foreground: 26 83.3% 14.1%; /* Dark text on warning backgrounds */
     
     /* Info Colors - For helpful tips and supplementary information with variants */
     --info: 198.6 88.7% 48.4%;         /* Using our accent cyan for informational content */
-    --info-light: 198.6 88.7% 68.4%;   /* Light cyan for subtle info backgrounds */
+    --info-light: 198.6 88.7% 95%;     /* Much lighter cyan for subtle backgrounds */
     --info-dark: 198.6 88.7% 28.4%;    /* Dark cyan for strong info emphasis */
     --info-foreground: 210 20% 98%;    /* Light text on info backgrounds */
     
     /* Learning Progress Colors - For progress bars and completion indicators */
-    --progress-bg: 210 40% 96%;        /* Light background for progress containers */
+    --progress-bg: 221.2 83.2% 95%;    /* Light primary background for progress containers */
     --progress-fill: 221.2 83.2% 53.3%; /* Primary blue for progress fill */
     
     /* Interactive States - Hover and active states that enhance the neural theme */
@@ -133,13 +133,13 @@
     
     /* Dark Primary Colors - Adjusted for dark backgrounds with variants */
     --primary: 221.2 83.2% 60%;       /* Slightly lighter blue for better visibility on dark backgrounds */
-    --primary-light: 221.2 83.2% 75%; /* Much lighter blue for subtle elements on dark backgrounds */
+    --primary-light: 221.2 83.2% 20%; /* Much lighter blue for subtle elements on dark backgrounds */
     --primary-dark: 221.2 83.2% 45%;  /* Darker blue for depth and contrast on dark backgrounds */
     --primary-foreground: 210 20% 98%; /* Light text maintains accessibility */
     
     /* Dark Secondary Colors - Orange adjusted for dark mode with variants */
     --secondary: 24.6 95% 60%;        /* Slightly brighter orange for visibility on dark backgrounds */
-    --secondary-light: 24.6 95% 75%;  /* Light orange that works well on dark surfaces */
+    --secondary-light: 24.6 95% 20%;  /* Light orange that works well on dark surfaces */
     --secondary-dark: 24.6 95% 45%;   /* Darker orange for emphasis on dark backgrounds */
     --secondary-foreground: 222.2 84% 4.9%; /* Dark text on bright orange backgrounds */
     
@@ -151,13 +151,13 @@
     
     /* Dark Accent Colors - Cyan maintains its energy in dark mode with variants */
     --accent: 198.6 88.7% 55%;        /* Slightly brighter cyan for dark mode visibility */
-    --accent-light: 198.6 88.7% 70%;  /* Light cyan for subtle accents on dark backgrounds */
+    --accent-light: 198.6 88.7% 20%;  /* Light cyan for subtle accents on dark backgrounds */
     --accent-dark: 198.6 88.7% 40%;   /* Darker cyan for depth and emphasis */
     --accent-foreground: 222.2 84% 4.9%; /* Dark text on bright accent */
     
     /* Dark Destructive Colors - Error feedback that's clear but not harsh with variants */
     --destructive: 0 62.8% 50%;       /* Adjusted red brightness for dark mode */
-    --destructive-light: 0 62.8% 65%; /* Light red for subtle error indicators */
+    --destructive-light: 0 62.8% 20%; /* Light red for subtle error indicators */
     --destructive-dark: 0 62.8% 35%;  /* Dark red for strong error emphasis */
     --destructive-foreground: 210 20% 98%; /* Light text on error backgrounds */
     
@@ -168,24 +168,24 @@
 
     /* Success Colors - Adjusted for dark mode with variants */
     --success: 160 84.1% 45%;          /* Slightly brighter green for dark mode visibility */
-    --success-light: 160 84.1% 60%;    /* Light green that works on dark backgrounds */
+    --success-light: 160 84.1% 20%;    /* Light green that works on dark backgrounds */
     --success-dark: 160 84.1% 30%;     /* Darker green for emphasis on dark backgrounds */
     --success-foreground: 0 0% 98%;    /* Light text maintains readability */
     
     /* Warning Colors - Adjusted for dark mode with variants */
     --warning: 45.4 93.4% 55%;         /* Brighter amber for dark mode visibility */
-    --warning-light: 45.4 93.4% 70%;   /* Light amber for subtle elements on dark */
+    --warning-light: 45.4 93.4% 20%;   /* Light amber for subtle elements on dark */
     --warning-dark: 45.4 93.4% 40%;    /* Darker amber for emphasis */
     --warning-foreground: 26 83.3% 14.1%; /* Dark text for contrast */
     
     /* Info Colors - Adjusted for dark mode with variants */
     --info: 198.6 88.7% 55%;           /* Brighter cyan for dark mode */
-    --info-light: 198.6 88.7% 70%;     /* Light cyan for subtle info elements */
+    --info-light: 198.6 88.7% 20%;     /* Light cyan for subtle info elements */
     --info-dark: 198.6 88.7% 40%;      /* Darker cyan for emphasis */
     --info-foreground: 222.2 84% 4.9%; /* Dark text on bright info backgrounds */
     
     /* Progress Colors - Adjusted for dark mode */
-    --progress-bg: 217.2 32.6% 17.5%;  /* Darker progress background */
+    --progress-bg: 221.2 83.2% 15%;    /* Darker primary background for progress containers */
     --progress-fill: 221.2 83.2% 60%;  /* Primary blue with increased lightness for dark mode */
 
     --sidebar-background: 240 5.9% 10%;
@@ -280,5 +280,27 @@
 
   code, pre {
     @apply font-code;
+  }
+
+  /* Mobile responsive typography */
+  @media (max-width: 768px) {
+    body {
+      font-size: 1rem; /* 16px */
+    }
+
+    h1 { font-size: 2.67rem; } /* 16 * 1.333^3.2 */
+    h2 { font-size: 2rem; } /* 16 * 1.333^2.5 */
+    h3 { font-size: 1.5rem; } /* 16 * 1.333^1.8 */
+    h4 { font-size: 1.25rem; } /* 16 * 1.333^1.2 */
+    h5 { font-size: 1rem; } /* 16px base */
+    h6 { font-size: 0.875rem; } /* 14px */
+
+    .text-sm {
+      font-size: 0.75rem; /* 12px */
+    }
+
+    .text-xs {
+      font-size: 0.6875rem; /* 11px */
+    }
   }
 }
