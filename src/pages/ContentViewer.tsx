@@ -1,88 +1,98 @@
 
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { mockCourses } from "@/lib/mockData";
 import Header from "@/components/Header";
 
 const ContentViewer = () => {
-  const { type, contentId } = useParams();
+  const { type, id } = useParams();
+  const courseId = "1"; // For demo purposes, assuming we're in course 1
 
+  // Mock content data
   const getContent = () => {
-    switch (contentId) {
-      case 'video-1':
-        return {
-          title: "Introduction to React Components",
-          type: "video",
-          content: (
-            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-              <p className="text-muted-foreground">Video Player - Introduction to React Components</p>
-            </div>
-          )
-        };
-      case 'article-1':
-        return {
-          title: "Understanding JSX Syntax",
-          type: "article",
-          content: (
-            <div className="prose max-w-none">
-              <h2>Understanding JSX Syntax</h2>
-              <p>JSX is a syntax extension to JavaScript. It produces React "elements". JSX may remind you of a template language, but it comes with the full power of JavaScript.</p>
-              <h3>Why JSX?</h3>
-              <p>React embraces the fact that rendering logic is inherently coupled with other UI logic: how events are handled, how the state changes over time, and how the data is prepared for display.</p>
-              <p>Instead of artificially separating technologies by putting markup and logic in separate files, React separates concerns with loosely coupled units called "components" that contain both.</p>
-              <h3>Embedding Expressions in JSX</h3>
-              <p>You can put any valid JavaScript expression inside the curly braces in JSX.</p>
-            </div>
-          )
-        };
-      case 'video-2':
-        return {
-          title: "Props and State Management",
-          type: "video",
-          content: (
-            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-              <p className="text-muted-foreground">Video Player - Props and State Management</p>
-            </div>
-          )
-        };
-      default:
-        return {
-          title: "Content Not Found",
-          type: "unknown",
-          content: <p>The requested content could not be found.</p>
-        };
+    if (type === "video" || type === "recording") {
+      return {
+        title: type === "recording" ? "JavaScript Fundamentals - Class Recording" : "Introduction to Variables",
+        type: "video",
+        embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+      };
+    } else if (type === "article") {
+      return {
+        title: "Understanding JavaScript Data Types",
+        type: "article",
+        content: `
+          <h2>JavaScript Data Types</h2>
+          <p>JavaScript has several built-in data types that are essential to understand...</p>
+          <h3>Primitive Types</h3>
+          <ul>
+            <li><strong>String:</strong> Text data</li>
+            <li><strong>Number:</strong> Numeric data</li>
+            <li><strong>Boolean:</strong> True or false values</li>
+            <li><strong>Undefined:</strong> Variable declared but not assigned</li>
+            <li><strong>Null:</strong> Intentional absence of value</li>
+          </ul>
+          <p>Understanding these types is crucial for effective JavaScript programming...</p>
+        `
+      };
     }
+    return null;
   };
 
   const content = getContent();
 
+  if (!content) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-heading font-bold mb-2">Content Not Found</h1>
+          <Button asChild>
+            <Link to={`/course/${courseId}/curriculum`}>Back to Curriculum</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="container mx-auto px-6 py-8 max-w-4xl">
+      <div className="max-w-4xl mx-auto p-4 md:p-8">
         <div className="mb-6">
-          <Button variant="ghost" size="sm" asChild className="mb-4">
-            <Link to={`/course/1/curriculum`}>
+          <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:no-underline">
+            <Link to={`/course/${courseId}/curriculum`}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Curriculum
             </Link>
           </Button>
-          
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-heading font-bold">{content.title}</h1>
-            <Button variant="outline" size="sm">
-              <CheckCircle2 className="w-4 h-4 mr-2" />
-              Mark as Complete
-            </Button>
-          </div>
+          <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{content.title}</h1>
         </div>
 
-        <Card className="shadow-8dp">
-          <CardContent className="p-8">
-            {content.content}
-          </CardContent>
-        </Card>
+        {content.type === "video" && (
+          <div className="aspect-video mb-8">
+            <iframe
+              src={content.embedUrl}
+              title={content.title}
+              className="w-full h-full rounded-lg"
+              allowFullScreen
+            />
+          </div>
+        )}
+
+        {content.type === "article" && (
+          <div className="max-w-3xl mx-auto">
+            <div 
+              className="prose prose-lg max-w-none mb-8"
+              dangerouslySetInnerHTML={{ __html: content.content }}
+            />
+            <div className="flex justify-center">
+              <Button>
+                <CheckCircle2 className="w-4 h-4 mr-2" />
+                Mark as Read
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -149,8 +149,8 @@ const CourseDashboard = () => {
       <Header />
       <div className="w-full">
         {/* Course Information Banner - Full Width */}
-        <div className="w-full p-6 md:p-8 rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/8 via-background to-accent/8 border-b border-border/50">
-          <div className="max-w-7xl mx-auto">
+        <div className="w-full rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/8 via-background to-accent/8 border-b border-border/50">
+          <div className="max-w-7xl mx-auto p-6 md:p-8">
             <div className="flex items-start gap-6 mb-6">
               <img
                 src={course.image}
@@ -277,7 +277,7 @@ const CourseDashboard = () => {
 
               {/* What's Next Section */}
               <Card className="shadow-4dp">
-                <CardHeader>
+                <CardHeader className="pb-4">
                   <div className="flex justify-between items-center">
                     <CardTitle className="text-xl">What's Next?</CardTitle>
                     <span className="text-sm text-muted-foreground">
@@ -285,12 +285,12 @@ const CourseDashboard = () => {
                     </span>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0">
                   {course.upcomingItems.length > 0 ? (
                     <div className="space-y-4">
                       {course.upcomingItems.map((item, index) => (
                         <div key={item.id}>
-                          <div className="flex items-start gap-4 p-4">
+                          <div className="flex items-start gap-4">
                             <div className="flex-shrink-0 mt-1">
                               {getItemIconWithBackground(item.type)}
                             </div>
@@ -328,7 +328,7 @@ const CourseDashboard = () => {
                             </div>
                           </div>
                           {index < course.upcomingItems.length - 1 && (
-                            <div className="border-t border-border"></div>
+                            <div className="border-t border-border mt-4"></div>
                           )}
                         </div>
                       ))}
@@ -346,10 +346,10 @@ const CourseDashboard = () => {
             {/* Right Column - Attendance */}
             <div>
               <Card className="shadow-4dp">
-                <CardHeader>
+                <CardHeader className="pb-4">
                   <CardTitle className="text-xl">Attendance</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-0">
                   <div className="text-center mb-6">
                     <div className="text-3xl font-bold text-primary mb-2">
                       {course.attendanceStats.percentage}%
@@ -360,7 +360,7 @@ const CourseDashboard = () => {
                   </div>
 
                   <div className="space-y-4 mb-6">
-                    <h4 className="font-medium text-sm">Recent Classes</h4>
+                    <h4 className="font-medium text-sm" style={{ fontSize: '0.875rem' }}>Recent Classes</h4>
                     {course.attendanceStats.recentClasses.map((classItem) => (
                       <div key={classItem.id} className="p-3 rounded-lg bg-muted/30">
                         <div className="flex items-center justify-between">

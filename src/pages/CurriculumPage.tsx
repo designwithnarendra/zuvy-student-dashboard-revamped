@@ -296,9 +296,8 @@ const CurriculumPage = () => {
     if (isRecording) {
       if (item.status === 'completed') {
         return (
-          <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground" asChild>
+          <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent" asChild>
             <Link to={`/content/${item.type}/${item.id}`}>
-              <Play className="w-4 h-4 mr-2" />
               Watch Recording
             </Link>
           </Button>
@@ -381,7 +380,7 @@ const CurriculumPage = () => {
           
           <div className="flex-1 min-w-0">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-2 md:gap-4 mb-3">
-              <h3 className="text-base md:text-lg font-medium break-words">
+              <h3 className="text-base md:text-lg font-medium break-words leading-relaxed">
                 {item.type === 'live-class' ? `Live Class: ${item.title}` :
                  item.type === 'recording' ? `Recording: ${item.title}` :
                  item.type === 'video' ? `Video: ${item.title}` :
@@ -397,7 +396,7 @@ const CurriculumPage = () => {
             </div>
             
             {item.description && (
-              <p className="text-sm text-muted-foreground mb-3 break-words">
+              <p className="text-sm text-muted-foreground mb-3 break-words leading-relaxed">
                 {item.description}
               </p>
             )}
@@ -443,7 +442,7 @@ const CurriculumPage = () => {
                 </Link>
               </Button>
               <h2 className="text-lg font-heading font-semibold">Course Curriculum</h2>
-              <p className="text-sm text-muted-foreground mt-1">{course.name}</p>
+              <p className="text-sm text-muted-foreground mt-1 break-words">{course.name}</p>
             </div>
             
             <ScrollArea className="h-[calc(100vh-120px)]">
@@ -455,17 +454,19 @@ const CurriculumPage = () => {
                       className="w-full justify-between text-left h-auto p-3 hover:bg-primary-light hover:text-foreground"
                       onClick={() => toggleModule(module.id)}
                     >
-                      <div>
-                        <div className="font-bold">Module {module.id}: {module.name}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-sm break-words leading-relaxed">Module {module.id}: {module.name}</div>
                         <div className="text-xs text-muted-foreground mt-1">
                           {module.topics.length} topics
                         </div>
                       </div>
-                      {expandedModules.includes(module.id) ? (
-                        <ChevronDown className="w-4 h-4" />
-                      ) : (
-                        <ChevronRight className="w-4 h-4" />
-                      )}
+                      <div className="flex-shrink-0 ml-2 self-start mt-0.5">
+                        {expandedModules.includes(module.id) ? (
+                          <ChevronDown className="w-4 h-4" />
+                        ) : (
+                          <ChevronRight className="w-4 h-4" />
+                        )}
+                      </div>
                     </Button>
                     
                     {expandedModules.includes(module.id) && (
@@ -475,10 +476,10 @@ const CurriculumPage = () => {
                             key={topic.id}
                             variant={selectedModule === module.id && selectedTopic === topic.id ? "secondary" : "ghost"}
                             size="sm"
-                            className="w-full justify-start text-left hover:bg-secondary-light hover:text-foreground"
+                            className="w-full justify-start text-left hover:bg-secondary-light hover:text-foreground text-sm break-words leading-relaxed"
                             onClick={() => handleTopicSelect(module.id, topic.id)}
                           >
-                            {topic.name}
+                            <span className="break-words">{topic.name}</span>
                           </Button>
                         ))}
                       </div>
@@ -496,13 +497,13 @@ const CurriculumPage = () => {
             {currentTopic ? (
               <div>
                 <div className="mb-6 md:mb-8">
-                  <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">
+                  <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2 break-words leading-relaxed">
                     {currentTopic.name}
                   </h1>
                   <p className="text-muted-foreground mb-2">
                     Module {selectedModule}: {currentModule?.name}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground break-words leading-relaxed">
                     {currentTopic.description}
                   </p>
                 </div>
