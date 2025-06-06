@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -120,7 +119,7 @@ const CurriculumPage = () => {
         case 'video':
           return 'bg-primary-light';
         case 'recording':
-          return 'bg-muted-light';
+          return 'bg-muted/20';
         case 'article':
         case 'assessment':
           return 'bg-accent-light';
@@ -313,9 +312,8 @@ const CurriculumPage = () => {
 
     if (isVideo) {
       return (
-        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground" asChild>
+        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent" asChild>
           <Link to={`/content/${item.type}/${item.id}`}>
-            <Play className="w-4 h-4 mr-2" />
             {item.status === 'completed' ? 'Watch Again' : 'Watch Video'}
           </Link>
         </Button>
@@ -324,9 +322,8 @@ const CurriculumPage = () => {
 
     if (isArticle) {
       return (
-        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground" asChild>
+        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent" asChild>
           <Link to={`/content/${item.type}/${item.id}`}>
-            <FileText className="w-4 h-4 mr-2" />
             {item.status === 'completed' ? 'Read Again' : 'Read Article'}
           </Link>
         </Button>
@@ -451,16 +448,16 @@ const CurriculumPage = () => {
                   <div key={module.id} className="space-y-2">
                     <Button
                       variant="ghost"
-                      className="w-full justify-between text-left h-auto p-3 hover:bg-primary-light hover:text-foreground"
+                      className="w-full justify-between text-left h-auto p-3 hover:bg-primary-light hover:text-charcoal"
                       onClick={() => toggleModule(module.id)}
                     >
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 pr-3">
                         <div className="font-bold text-sm break-words leading-relaxed">Module {module.id}: {module.name}</div>
                         <div className="text-xs text-muted-foreground mt-1">
                           {module.topics.length} topics
                         </div>
                       </div>
-                      <div className="flex-shrink-0 ml-2 self-start mt-0.5">
+                      <div className="flex-shrink-0 self-start mt-0.5">
                         {expandedModules.includes(module.id) ? (
                           <ChevronDown className="w-4 h-4" />
                         ) : (
@@ -476,7 +473,7 @@ const CurriculumPage = () => {
                             key={topic.id}
                             variant={selectedModule === module.id && selectedTopic === topic.id ? "secondary" : "ghost"}
                             size="sm"
-                            className="w-full justify-start text-left hover:bg-secondary-light hover:text-foreground text-sm break-words leading-relaxed"
+                            className="w-full justify-start text-left hover:bg-secondary-light hover:text-charcoal text-sm break-words leading-relaxed p-2"
                             onClick={() => handleTopicSelect(module.id, topic.id)}
                           >
                             <span className="break-words">{topic.name}</span>
