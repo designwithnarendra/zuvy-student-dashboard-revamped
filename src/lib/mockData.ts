@@ -1,3 +1,4 @@
+
 export interface Student {
   id: string;
   name: string;
@@ -87,6 +88,7 @@ export interface TopicItem {
   content?: string;
   dueDate?: Date;
   scheduledDateTime?: Date;
+  endDateTime?: Date;
   attendanceStatus?: 'present' | 'absent';
   watchStatus?: 'not-watched' | 'watched';
   readStatus?: 'not-started' | 'read';
