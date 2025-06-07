@@ -254,7 +254,9 @@ export const mockCourses: Course[] = [
                 title: "JavaScript Basics and Environment Setup",
                 status: 'completed',
                 description: "Quiz on JavaScript basics and environment setup",
-                duration: "30 min"
+                duration: "30 min",
+                scheduledDateTime: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000)
               }
             ]
           },
@@ -318,7 +320,9 @@ export const mockCourses: Course[] = [
                 title: "Variable Manipulation Challenge",
                 status: 'not-started',
                 description: "Coding challenge involving variable manipulation and operator usage",
-                duration: "45 min"
+                duration: "45 min",
+                scheduledDateTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
               }
             ]
           },
@@ -377,7 +381,9 @@ export const mockCourses: Course[] = [
                 title: "Control Flow Quiz",
                 status: 'not-started',
                 description: "Quiz on control flow statements",
-                duration: "35 min"
+                duration: "35 min",
+                scheduledDateTime: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
               }
             ]
           },
@@ -436,7 +442,9 @@ export const mockCourses: Course[] = [
                 title: "Function Scope Debugging",
                 status: 'not-started',
                 description: "Debugging exercises involving function scope and return values",
-                duration: "40 min"
+                duration: "40 min",
+                scheduledDateTime: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
               }
             ]
           }
@@ -501,7 +509,9 @@ export const mockCourses: Course[] = [
                 title: "DOM Concepts Quiz",
                 status: 'not-started',
                 description: "Quiz on DOM concepts and selectors",
-                duration: "30 min"
+                duration: "30 min",
+                scheduledDateTime: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000)
               }
             ]
           }
@@ -691,7 +701,9 @@ export const mockCourses: Course[] = [
                 title: "Kotlin Fundamentals Quiz",
                 status: 'completed',
                 description: "Test your knowledge of Kotlin basics",
-                duration: "30 min"
+                duration: "30 min",
+                scheduledDateTime: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
               }
             ]
           },
@@ -739,7 +751,9 @@ export const mockCourses: Course[] = [
                 title: "OOP Concepts Test",
                 status: 'not-started',
                 description: "Assessment on object-oriented programming in Kotlin",
-                duration: "45 min"
+                duration: "45 min",
+                scheduledDateTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
               }
             ]
           }
@@ -800,7 +814,9 @@ export const mockCourses: Course[] = [
                 title: "UI Components Quiz",
                 status: 'not-started',
                 description: "Test your knowledge of Android UI components",
-                duration: "35 min"
+                duration: "35 min",
+                scheduledDateTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+                endDateTime: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000)
               }
             ]
           }
