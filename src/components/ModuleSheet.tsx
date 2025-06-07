@@ -94,9 +94,13 @@ const ModuleSheet = ({
                     {module.topics.map((topic: Topic) => (
                       <SheetClose asChild key={topic.id}>
                         <Button
-                          variant={selectedModule === module.id && selectedTopic === topic.id ? "secondary" : "ghost"}
+                          variant="ghost"
                           size="sm"
-                          className="w-full justify-start text-left hover:bg-secondary-light hover:text-charcoal text-sm break-words leading-relaxed p-2"
+                          className={`w-full justify-start text-left text-sm break-words leading-relaxed p-2 ${
+                            selectedModule === module.id && selectedTopic === topic.id 
+                              ? "bg-primary-light border-l-4 border-primary text-charcoal" 
+                              : "hover:bg-primary-light hover:text-charcoal"
+                          }`}
                           onClick={() => handleTopicSelect(module.id, topic.id)}
                         >
                           <span className="break-words">{topic.name}</span>

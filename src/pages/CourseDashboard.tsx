@@ -1,3 +1,4 @@
+
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -206,22 +207,26 @@ const CourseDashboard = () => {
                 />
               </div>
               <div className="flex-1">
-                <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{course.name}</h1>
-                <p className="text-base md:text-lg text-muted-foreground mb-4">{course.description}</p>
-                <div className="flex items-center gap-2 mb-4">
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src={course.instructor.avatar} />
-                    <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
-                  </Avatar>
-                  <span className="font-medium">{course.instructor.name}</span>
-                </div>
-                <div className="flex items-center gap-2 mb-4">
-                  <p className="text-sm font-bold text-muted-foreground">In Collaboration With</p>
-                  <img
-                    src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
-                    alt="AFE Brand"
-                    className="h-12"
-                  />
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1">
+                    <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{course.name}</h1>
+                    <p className="text-base md:text-lg text-muted-foreground mb-4">{course.description}</p>
+                    <div className="flex items-center gap-2 mb-4">
+                      <Avatar className="w-8 h-8">
+                        <AvatarImage src={course.instructor.avatar} />
+                        <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
+                      </Avatar>
+                      <span className="font-medium">{course.instructor.name}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-bold text-muted-foreground">In Collaboration With</p>
+                    <img
+                      src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
+                      alt="AFE Brand"
+                      className="h-12"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -332,16 +337,16 @@ const CourseDashboard = () => {
                       />
                     </div>
                   </div>
-                  {/* Desktop CTA */}
-                  <div className="hidden md:block">
-                    <Button className="w-full" asChild>
+                  {/* Desktop CTA - Bottom right with padding */}
+                  <div className="hidden md:flex justify-end">
+                    <Button className="px-6" asChild>
                       <Link to={`/course/${courseId}/curriculum`}>
                         <Play className="w-4 h-4 mr-2" />
                         {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
                       </Link>
                     </Button>
                   </div>
-                  {/* Mobile CTA */}
+                  {/* Mobile CTA - Full width */}
                   <div className="md:hidden">
                     <Button className="w-full" asChild>
                       <Link to={`/course/${courseId}/curriculum`}>
@@ -394,18 +399,18 @@ const CourseDashboard = () => {
                                   {formatDate(item.dateTime)}
                                 </p>
                               </div>
-                              {/* Desktop CTA */}
-                              <div className="hidden md:block">
+                              {/* Desktop CTA - Bottom right */}
+                              <div className="hidden md:flex justify-end">
                                 <Button 
                                   size="sm" 
                                   variant={item.canStart ? "default" : "outline"}
                                   disabled={!item.canStart}
-                                  className="w-auto"
+                                  className="px-6"
                                 >
                                   {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
                                 </Button>
                               </div>
-                              {/* Mobile CTA */}
+                              {/* Mobile CTA - Full width */}
                               <div className="md:hidden">
                                 <Button 
                                   size="sm" 

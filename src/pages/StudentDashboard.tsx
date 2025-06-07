@@ -19,12 +19,12 @@ const StudentDashboard = () => {
       return (
         <div className="flex items-center gap-3 w-full">
           <div className="hidden md:flex items-center gap-3 w-full">
-            <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
             <Button variant="outline" className="flex-1 border-success text-success hover:bg-success hover:text-success-foreground" asChild>
               <Link to={`/course/${course.id}`}>
                 View Course
               </Link>
             </Button>
+            <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
           </div>
           <div className="md:hidden flex flex-col gap-3 w-full">
             <Button variant="outline" className="w-full border-success text-success hover:bg-success hover:text-success-foreground" asChild>
@@ -40,7 +40,7 @@ const StudentDashboard = () => {
     
     if (course.progress === 0) {
       return (
-        <Button className="w-full" asChild>
+        <Button className="w-full md:w-auto" asChild>
           <Link to={`/course/${course.id}`}>
             <Play className="w-4 h-4 mr-2" />
             Start Learning
@@ -50,7 +50,7 @@ const StudentDashboard = () => {
     }
     
     return (
-      <Button className="w-full" asChild>
+      <Button className="w-full md:w-auto" asChild>
         <Link to={`/course/${course.id}`}>
           <RotateCcw className="w-4 h-4 mr-2" />
           Resume Learning
@@ -129,46 +129,50 @@ const StudentDashboard = () => {
                   
                   {/* Course Info */}
                   <div className="flex-1">
-                    <h3 className="text-xl font-heading font-semibold mb-2">
-                      {course.name}
-                    </h3>
-                    <p className="text-muted-foreground mb-3 line-clamp-2">
-                      {course.description}
-                    </p>
-                    <div className="flex items-center gap-2 mb-4">
-                      <Avatar className="w-6 h-6">
-                        <AvatarImage src={course.instructor.avatar} />
-                        <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm text-muted-foreground">
-                        {course.instructor.name}
-                      </span>
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-heading font-semibold mb-2">
+                          {course.name}
+                        </h3>
+                        <p className="text-muted-foreground mb-3 line-clamp-2">
+                          {course.description}
+                        </p>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Avatar className="w-6 h-6">
+                            <AvatarImage src={course.instructor.avatar} />
+                            <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
+                          </Avatar>
+                          <span className="text-sm text-muted-foreground">
+                            {course.instructor.name}
+                          </span>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="mb-4 md:mb-0">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-sm font-medium">Progress</span>
+                            <span className="text-sm text-muted-foreground">{course.progress}%</span>
+                          </div>
+                          <div className="progress-bg rounded-full h-2">
+                            <div 
+                              className="progress-fill h-2 rounded-full transition-all duration-300"
+                              style={{ width: `${course.progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Button - Desktop: top right */}
+                      <div className="hidden md:flex flex-shrink-0">
+                        {getActionButton(course)}
+                      </div>
                     </div>
 
-                    {/* Progress Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm font-medium">Progress</span>
-                        <span className="text-sm text-muted-foreground">{course.progress}%</span>
-                      </div>
-                      <div className="progress-bg rounded-full h-2">
-                        <div 
-                          className="progress-fill h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${course.progress}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Action Button - Desktop: side by side, Mobile: below progress */}
-                    <div className="hidden md:block mb-4">
+                    {/* Action Button - Mobile: below progress */}
+                    <div className="md:hidden mt-4">
                       {getActionButton(course)}
                     </div>
                   </div>
-                </div>
-
-                {/* Action Button - Mobile only */}
-                <div className="md:hidden mb-4">
-                  {getActionButton(course)}
                 </div>
 
                 {/* Separator and Upcoming Items - Only for enrolled courses */}
