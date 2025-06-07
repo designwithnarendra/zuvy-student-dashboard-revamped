@@ -1,4 +1,3 @@
-
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -197,13 +196,16 @@ const CourseDashboard = () => {
         {/* Course Information Banner - Full Width */}
         <div className="w-full rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/8 via-background to-accent/8 border-b border-border/50">
           <div className="max-w-7xl mx-auto p-6 md:p-8">
-            <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
-              <div className="flex-1 w-full">
+            {/* Desktop Layout */}
+            <div className="hidden md:flex flex-col md:flex-row items-start gap-6 mb-6">
+              <div className="flex-shrink-0">
                 <img
                   src={course.image}
                   alt={course.name}
-                  className="w-full h-40 md:h-48 rounded-lg object-cover mb-4"
+                  className="w-32 h-32 rounded-lg object-cover"
                 />
+              </div>
+              <div className="flex-1">
                 <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{course.name}</h1>
                 <p className="text-base md:text-lg text-muted-foreground mb-4">{course.description}</p>
                 <div className="flex items-center gap-2 mb-4">
@@ -221,6 +223,32 @@ const CourseDashboard = () => {
                     className="h-12"
                   />
                 </div>
+              </div>
+            </div>
+
+            {/* Mobile Layout */}
+            <div className="md:hidden mb-6">
+              <img
+                src={course.image}
+                alt={course.name}
+                className="w-full h-40 rounded-lg object-cover mb-4"
+              />
+              <h1 className="text-2xl font-heading font-bold mb-2">{course.name}</h1>
+              <p className="text-base text-muted-foreground mb-4">{course.description}</p>
+              <div className="flex items-center gap-2 mb-4">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={course.instructor.avatar} />
+                  <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
+                </Avatar>
+                <span className="font-medium">{course.instructor.name}</span>
+              </div>
+              <div className="flex items-center gap-2 mb-4">
+                <p className="text-sm font-bold text-muted-foreground">In Collaboration With</p>
+                <img
+                  src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
+                  alt="AFE Brand"
+                  className="h-12"
+                />
               </div>
             </div>
 
@@ -304,12 +332,24 @@ const CourseDashboard = () => {
                       />
                     </div>
                   </div>
-                  <Button className="w-full" asChild>
-                    <Link to={`/course/${courseId}/curriculum`}>
-                      <Play className="w-4 h-4 mr-2" />
-                      {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
-                    </Link>
-                  </Button>
+                  {/* Desktop CTA */}
+                  <div className="hidden md:block">
+                    <Button className="w-full" asChild>
+                      <Link to={`/course/${courseId}/curriculum`}>
+                        <Play className="w-4 h-4 mr-2" />
+                        {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
+                      </Link>
+                    </Button>
+                  </div>
+                  {/* Mobile CTA */}
+                  <div className="md:hidden">
+                    <Button className="w-full" asChild>
+                      <Link to={`/course/${courseId}/curriculum`}>
+                        <Play className="w-4 h-4 mr-2" />
+                        {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
+                      </Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -354,14 +394,28 @@ const CourseDashboard = () => {
                                   {formatDate(item.dateTime)}
                                 </p>
                               </div>
-                              <Button 
-                                size="sm" 
-                                variant={item.canStart ? "default" : "outline"}
-                                disabled={!item.canStart}
-                                className="w-full"
-                              >
-                                {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
-                              </Button>
+                              {/* Desktop CTA */}
+                              <div className="hidden md:block">
+                                <Button 
+                                  size="sm" 
+                                  variant={item.canStart ? "default" : "outline"}
+                                  disabled={!item.canStart}
+                                  className="w-auto"
+                                >
+                                  {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
+                                </Button>
+                              </div>
+                              {/* Mobile CTA */}
+                              <div className="md:hidden">
+                                <Button 
+                                  size="sm" 
+                                  variant={item.canStart ? "default" : "outline"}
+                                  disabled={!item.canStart}
+                                  className="w-full"
+                                >
+                                  {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
+                                </Button>
+                              </div>
                             </div>
                           </div>
                           {index < course.upcomingItems.length - 1 && (

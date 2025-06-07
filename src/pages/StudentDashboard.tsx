@@ -18,12 +18,22 @@ const StudentDashboard = () => {
     if (course.status === 'completed') {
       return (
         <div className="flex items-center gap-3 w-full">
-          <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
-          <Button variant="outline" className="flex-1 border-success text-success hover:bg-success hover:text-success-foreground" asChild>
-            <Link to={`/course/${course.id}`}>
-              View Course
-            </Link>
-          </Button>
+          <div className="hidden md:flex items-center gap-3 w-full">
+            <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+            <Button variant="outline" className="flex-1 border-success text-success hover:bg-success hover:text-success-foreground" asChild>
+              <Link to={`/course/${course.id}`}>
+                View Course
+              </Link>
+            </Button>
+          </div>
+          <div className="md:hidden flex flex-col gap-3 w-full">
+            <Button variant="outline" className="w-full border-success text-success hover:bg-success hover:text-success-foreground" asChild>
+              <Link to={`/course/${course.id}`}>
+                View Course
+              </Link>
+            </Button>
+            <CheckCircle className="w-5 h-5 text-success mx-auto" />
+          </div>
         </div>
       );
     }
@@ -149,11 +159,16 @@ const StudentDashboard = () => {
                       </div>
                     </div>
 
-                    {/* Action Button */}
-                    <div className="mb-4">
+                    {/* Action Button - Desktop: side by side, Mobile: below progress */}
+                    <div className="hidden md:block mb-4">
                       {getActionButton(course)}
                     </div>
                   </div>
+                </div>
+
+                {/* Action Button - Mobile only */}
+                <div className="md:hidden mb-4">
+                  {getActionButton(course)}
                 </div>
 
                 {/* Separator and Upcoming Items - Only for enrolled courses */}

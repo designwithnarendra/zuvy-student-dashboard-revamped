@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -478,20 +477,20 @@ const CurriculumPage = () => {
                     </Button>
                     
                     {expandedModules.includes(module.id) && (
-                      <div className="space-y-1">
+                      <div className="space-y-1 pl-0">
                         {module.topics.map((topic: Topic) => (
                           <Button
                             key={topic.id}
                             variant="ghost"
                             size="sm"
-                            className={`w-full justify-start text-left hover:bg-primary-light hover:text-charcoal text-sm break-words leading-relaxed p-2 ${
+                            className={`w-full justify-start text-left h-auto p-2 text-sm break-words leading-relaxed whitespace-normal ${
                               selectedModule === module.id && selectedTopic === topic.id 
                                 ? "bg-primary-light border-l-4 border-primary text-charcoal" 
-                                : ""
+                                : "hover:bg-primary-light hover:text-charcoal"
                             }`}
                             onClick={() => handleTopicSelect(module.id, topic.id)}
                           >
-                            <span className="break-words whitespace-normal">{topic.name}</span>
+                            <span className="break-words whitespace-normal text-left">{topic.name}</span>
                           </Button>
                         ))}
                       </div>
@@ -544,7 +543,6 @@ const CurriculumPage = () => {
                   selectedTopic={selectedTopic}
                   onTopicSelect={(moduleId, topicId) => {
                     handleTopicSelect(moduleId, topicId);
-                    // Close the sheet by triggering a click outside or programmatically
                   }}
                   courseName={course.name}
                 />
