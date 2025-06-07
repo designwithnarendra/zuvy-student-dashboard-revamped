@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Video, BookOpen, FileText, Clock, Calendar, Users, Play, CheckCircle2, XCircle } from "lucide-react";
 import { mockCourses, RecentClass } from "@/lib/mockData";
 import Header from "@/components/Header";
@@ -47,7 +48,7 @@ const CourseDashboard = () => {
       day: 'numeric'
     };
     
-    return `${today.toLocaleDateString('en-US', formatOptions)} - ${seventhDay.toLocaleDateString('en-US', formatOptions)}`;
+    return `From ${today.toLocaleDateString('en-US', formatOptions)} to ${seventhDay.toLocaleDateString('en-US', formatOptions)}`;
   };
 
   const getItemIcon = (type: string) => {
@@ -106,42 +107,87 @@ const CourseDashboard = () => {
   };
 
   const AttendanceModal = ({ classes }: { classes: RecentClass[] }) => (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="link" className="p-0 h-auto text-primary mx-auto">
-          View Full Attendance
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Full Attendance Record</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-1">
-          {[...classes, 
-            { id: "4", name: "JavaScript Fundamentals", status: 'attended' as const, date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" },
-            { id: "5", name: "HTML & CSS Basics", status: 'attended' as const, date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" },
-            { id: "6", name: "Web Development Intro", status: 'absent' as const, date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" }
-          ].map((classItem, index, array) => (
-            <div key={classItem.id}>
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1">
-                  <h4 className="text-lg font-bold">{classItem.name}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {formatDate(classItem.date)} • {classItem.instructor}
-                  </p>
+    <>
+      {/* Desktop Dialog */}
+      <div className="hidden lg:block">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="link" className="p-0 h-auto text-primary mx-auto">
+              View Full Attendance
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-xl">Full Attendance Record</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-1">
+              {[...classes, 
+                { id: "4", name: "JavaScript Fundamentals", status: 'attended' as const, date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" },
+                { id: "5", name: "HTML & CSS Basics", status: 'attended' as const, date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" },
+                { id: "6", name: "Web Development Intro", status: 'absent' as const, date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" }
+              ].map((classItem, index, array) => (
+                <div key={classItem.id}>
+                  <div className="flex items-center justify-between py-4">
+                    <div className="flex-1">
+                      <h4 className="text-lg font-bold">{classItem.name}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {formatDate(classItem.date)} • {classItem.instructor}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className={classItem.status === 'attended' ? "text-success border-success" : "text-destructive border-destructive"}>
+                        {classItem.status === 'attended' ? 'Present' : 'Absent'}
+                      </Badge>
+                    </div>
+                  </div>
+                  {index < array.length - 1 && <div className="border-t border-border"></div>}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className={classItem.status === 'attended' ? "text-success border-success" : "text-destructive border-destructive"}>
-                    {classItem.status === 'attended' ? 'Present' : 'Absent'}
-                  </Badge>
-                </div>
-              </div>
-              {index < array.length - 1 && <div className="border-t border-border"></div>}
+              ))}
             </div>
-          ))}
-        </div>
-      </DialogContent>
-    </Dialog>
+          </DialogContent>
+        </Dialog>
+      </div>
+
+      {/* Mobile Sheet */}
+      <div className="lg:hidden">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="link" className="p-0 h-auto text-primary mx-auto">
+              View Full Attendance
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="bottom" className="h-[80vh]">
+            <SheetHeader>
+              <SheetTitle className="text-xl">Full Attendance Record</SheetTitle>
+            </SheetHeader>
+            <div className="space-y-1 mt-4 overflow-y-auto">
+              {[...classes, 
+                { id: "4", name: "JavaScript Fundamentals", status: 'attended' as const, date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" },
+                { id: "5", name: "HTML & CSS Basics", status: 'attended' as const, date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" },
+                { id: "6", name: "Web Development Intro", status: 'absent' as const, date: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), instructor: "Dr. Sarah Chen" }
+              ].map((classItem, index, array) => (
+                <div key={classItem.id}>
+                  <div className="flex items-center justify-between py-4">
+                    <div className="flex-1">
+                      <h4 className="text-lg font-bold">{classItem.name}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {formatDate(classItem.date)} • {classItem.instructor}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className={classItem.status === 'attended' ? "text-success border-success" : "text-destructive border-destructive"}>
+                        {classItem.status === 'attended' ? 'Present' : 'Absent'}
+                      </Badge>
+                    </div>
+                  </div>
+                  {index < array.length - 1 && <div className="border-t border-border"></div>}
+                </div>
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </>
   );
 
   return (
@@ -151,29 +197,30 @@ const CourseDashboard = () => {
         {/* Course Information Banner - Full Width */}
         <div className="w-full rounded-b-lg shadow-8dp bg-gradient-to-br from-primary/8 via-background to-accent/8 border-b border-border/50">
           <div className="max-w-7xl mx-auto p-6 md:p-8">
-            <div className="flex items-start gap-6 mb-6">
-              <img
-                src={course.image}
-                alt={course.name}
-                className="w-20 h-20 md:w-24 md:h-24 rounded-lg object-cover flex-shrink-0"
-              />
-              <div className="flex-1">
+            <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
+              <div className="flex-1 w-full">
+                <img
+                  src={course.image}
+                  alt={course.name}
+                  className="w-full h-40 md:h-48 rounded-lg object-cover mb-4"
+                />
                 <h1 className="text-2xl md:text-3xl font-heading font-bold mb-2">{course.name}</h1>
                 <p className="text-base md:text-lg text-muted-foreground mb-4">{course.description}</p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mb-4">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src={course.instructor.avatar} />
                     <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
                   </Avatar>
                   <span className="font-medium">{course.instructor.name}</span>
                 </div>
-              </div>
-              <div className="flex-shrink-0">
-                <img
-                  src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
-                  alt="AFE Brand"
-                  className="h-16"
-                />
+                <div className="flex items-center gap-2 mb-4">
+                  <p className="text-sm font-bold text-muted-foreground">In Collaboration With</p>
+                  <img
+                    src="/lovable-uploads/09118b9e-00df-4356-a333-707d5733862f.png"
+                    alt="AFE Brand"
+                    className="h-12"
+                  />
+                </div>
               </div>
             </div>
 
@@ -231,36 +278,21 @@ const CourseDashboard = () => {
               {/* Current Module Section */}
               <Card className="shadow-4dp">
                 <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-heading font-semibold mb-2">
-                        Current Module: {course.currentModule.name}
-                      </h3>
-                      <p className="text-muted-foreground mb-2">
-                        {course.currentModule.currentChapter}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {course.currentModule.isJustStarting 
-                          ? `Next: ${course.currentModule.nextItem.name}` 
-                          : `Continue with: ${course.currentModule.nextItem.name}`}
-                      </p>
-                      {course.currentModule.nextItem.scheduledTime && (
-                        <p className="text-sm text-muted-foreground mt-1">
-                          {course.currentModule.nextItem.scheduledTime}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex-shrink-0 flex justify-center">
-                      <Button asChild>
-                        <Link to={`/course/${courseId}/curriculum`}>
-                          <Play className="w-4 h-4 mr-2" />
-                          {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
-                        </Link>
-                      </Button>
-                    </div>
+                  <div className="mb-4">
+                    <h3 className="text-xl font-heading font-semibold mb-2">
+                      Current Module: {course.currentModule.name}
+                    </h3>
+                    <p className="text-muted-foreground mb-2">
+                      Topic: {course.currentModule.currentChapter}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {course.currentModule.isJustStarting 
+                        ? `Next: ${course.currentModule.nextItem.name}` 
+                        : `Continue with: ${course.currentModule.nextItem.name}`}
+                    </p>
                   </div>
                   {/* Current Module Progress */}
-                  <div>
+                  <div className="mb-4">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium">Module Progress</span>
                       <span className="text-sm text-muted-foreground">65%</span>
@@ -272,18 +304,22 @@ const CourseDashboard = () => {
                       />
                     </div>
                   </div>
+                  <Button className="w-full" asChild>
+                    <Link to={`/course/${courseId}/curriculum`}>
+                      <Play className="w-4 h-4 mr-2" />
+                      {course.currentModule.isJustStarting ? 'Start Learning' : 'Continue Learning'}
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
 
               {/* What's Next Section */}
               <Card className="shadow-4dp">
                 <CardHeader className="pb-4">
-                  <div className="flex justify-between items-center">
-                    <CardTitle className="text-xl">What's Next?</CardTitle>
-                    <span className="text-sm text-muted-foreground">
-                      {formatDateRange()}
-                    </span>
-                  </div>
+                  <CardTitle className="text-xl">What's Next?</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    {formatDateRange()}
+                  </p>
                 </CardHeader>
                 <CardContent className="pt-0">
                   {course.upcomingItems.length > 0 ? (
@@ -313,18 +349,19 @@ const CourseDashboard = () => {
                               <p className="text-sm text-muted-foreground mb-3">
                                 {item.description}
                               </p>
-                              <div className="flex items-center justify-between">
+                              <div className="flex items-center justify-between mb-3">
                                 <p className="text-sm font-medium">
                                   {formatDate(item.dateTime)}
                                 </p>
-                                <Button 
-                                  size="sm" 
-                                  variant={item.canStart ? "default" : "outline"}
-                                  disabled={!item.canStart}
-                                >
-                                  {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
-                                </Button>
                               </div>
+                              <Button 
+                                size="sm" 
+                                variant={item.canStart ? "default" : "outline"}
+                                disabled={!item.canStart}
+                                className="w-full"
+                              >
+                                {item.canStart ? item.actionText : getTimeRemaining(item.dateTime)}
+                              </Button>
                             </div>
                           </div>
                           {index < course.upcomingItems.length - 1 && (
@@ -360,7 +397,7 @@ const CourseDashboard = () => {
                   </div>
 
                   <div className="space-y-4 mb-6">
-                    <h4 className="font-medium text-sm" style={{ fontSize: '0.875rem' }}>Recent Classes</h4>
+                    <h4 className="font-medium text-sm">Recent Classes</h4>
                     {course.attendanceStats.recentClasses.map((classItem) => (
                       <div key={classItem.id} className="p-3 rounded-lg bg-muted/30">
                         <div className="flex items-center justify-between">

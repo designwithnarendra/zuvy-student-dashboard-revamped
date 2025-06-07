@@ -17,18 +17,20 @@ const StudentDashboard = () => {
   const getActionButton = (course: Course) => {
     if (course.status === 'completed') {
       return (
-        <Button variant="outline" size="sm" asChild>
-          <Link to={`/course/${course.id}`}>
-            <CheckCircle className="w-4 h-4 mr-2" />
-            View Course
-          </Link>
-        </Button>
+        <div className="flex items-center gap-3 w-full">
+          <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
+          <Button variant="outline" className="flex-1 border-success text-success hover:bg-success hover:text-success-foreground" asChild>
+            <Link to={`/course/${course.id}`}>
+              View Course
+            </Link>
+          </Button>
+        </div>
       );
     }
     
     if (course.progress === 0) {
       return (
-        <Button size="sm" asChild>
+        <Button className="w-full" asChild>
           <Link to={`/course/${course.id}`}>
             <Play className="w-4 h-4 mr-2" />
             Start Learning
@@ -38,7 +40,7 @@ const StudentDashboard = () => {
     }
     
     return (
-      <Button size="sm" asChild>
+      <Button className="w-full" asChild>
         <Link to={`/course/${course.id}`}>
           <RotateCcw className="w-4 h-4 mr-2" />
           Resume Learning
@@ -105,13 +107,13 @@ const StudentDashboard = () => {
           {filteredCourses.map((course) => (
             <Card key={course.id} className="w-full shadow-4dp hover:shadow-8dp transition-shadow duration-200">
               <CardContent className="p-6">
-                <div className="flex gap-6 mb-6">
+                <div className="flex flex-col md:flex-row gap-6">
                   {/* Course Image */}
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 md:w-20 md:h-20">
                     <img
                       src={course.image}
                       alt={course.name}
-                      className="w-20 h-20 rounded-lg object-cover"
+                      className="w-full h-20 md:w-20 md:h-20 rounded-lg object-cover"
                     />
                   </div>
                   
@@ -123,7 +125,7 @@ const StudentDashboard = () => {
                     <p className="text-muted-foreground mb-3 line-clamp-2">
                       {course.description}
                     </p>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 mb-4">
                       <Avatar className="w-6 h-6">
                         <AvatarImage src={course.instructor.avatar} />
                         <AvatarFallback>{course.instructor.name[0]}</AvatarFallback>
@@ -132,76 +134,79 @@ const StudentDashboard = () => {
                         {course.instructor.name}
                       </span>
                     </div>
-                  </div>
 
-                  {/* Action Button */}
-                  <div className="flex-shrink-0 flex items-start">
-                    {getActionButton(course)}
-                  </div>
-                </div>
-
-                {/* Progress Bar */}
-                <div className="mb-6">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium">Progress</span>
-                    <span className="text-sm text-muted-foreground">{course.progress}%</span>
-                  </div>
-                  <div className="progress-bg rounded-full h-2">
-                    <div 
-                      className="progress-fill h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${course.progress}%` }}
-                    />
-                  </div>
-                </div>
-
-                {/* Separator */}
-                <div className="border-t border-border mb-6"></div>
-
-                {/* Upcoming Items */}
-                {course.upcomingItems.length > 0 && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {course.upcomingItems.slice(0, 3).map((item) => (
-                      <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg">
-                        <div className="flex-shrink-0 mt-1">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            item.type === 'class' 
-                              ? 'bg-secondary-light' 
-                              : item.type === 'assessment'
-                              ? 'bg-warning-light'
-                              : 'bg-info-light'
-                          }`}>
-                            {item.type === 'class' && <Video className="w-4 h-4 text-secondary" />}
-                            {item.type === 'assessment' && <FileText className="w-4 h-4 text-warning" />}
-                            {item.type === 'assignment' && <FileText className="w-4 h-4 text-info" />}
-                          </div>
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <h4 className="text-sm font-medium line-clamp-1">
-                              {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
-                            </h4>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs px-2 py-0.5 whitespace-nowrap ${
-                                item.type === 'class' 
-                                  ? 'bg-secondary-light text-foreground border-secondary-light' 
-                                  : item.type === 'assessment'
-                                  ? 'bg-warning-light text-foreground border-warning-light'
-                                  : 'bg-info-light text-foreground border-info-light'
-                              }`}
-                            >
-                              {item.type === 'class' && 'Live Class'}
-                              {item.type === 'assessment' && 'Assessment'}
-                              {item.type === 'assignment' && 'Assignment'}
-                            </Badge>
-                          </div>
-                          <p className="text-xs text-muted-foreground mb-2">
-                            {item.type === 'assignment' ? 'Due' : 'Starts'} in {formatUpcomingItem(item)}
-                          </p>
-                        </div>
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">Progress</span>
+                        <span className="text-sm text-muted-foreground">{course.progress}%</span>
                       </div>
-                    ))}
+                      <div className="progress-bg rounded-full h-2">
+                        <div 
+                          className="progress-fill h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${course.progress}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="mb-4">
+                      {getActionButton(course)}
+                    </div>
                   </div>
+                </div>
+
+                {/* Separator and Upcoming Items - Only for enrolled courses */}
+                {course.status === 'enrolled' && course.upcomingItems.length > 0 && (
+                  <>
+                    {/* Separator */}
+                    <div className="border-t border-border mb-6"></div>
+
+                    {/* Upcoming Items */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {course.upcomingItems.slice(0, 3).map((item) => (
+                        <div key={item.id} className="flex items-start gap-3 p-3 rounded-lg">
+                          <div className="flex-shrink-0 mt-1">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              item.type === 'class' 
+                                ? 'bg-secondary-light' 
+                                : item.type === 'assessment'
+                                ? 'bg-warning-light'
+                                : 'bg-info-light'
+                            }`}>
+                              {item.type === 'class' && <Video className="w-4 h-4 text-secondary" />}
+                              {item.type === 'assessment' && <FileText className="w-4 h-4 text-warning" />}
+                              {item.type === 'assignment' && <FileText className="w-4 h-4 text-info" />}
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <h4 className="text-sm font-medium line-clamp-1">
+                                {item.title.replace(/^(Live Class|Assessment|Assignment): /, '')}
+                              </h4>
+                              <Badge 
+                                variant="outline" 
+                                className={`text-xs px-2 py-0.5 whitespace-nowrap ${
+                                  item.type === 'class' 
+                                    ? 'bg-secondary-light text-foreground border-secondary-light' 
+                                    : item.type === 'assessment'
+                                    ? 'bg-warning-light text-foreground border-warning-light'
+                                    : 'bg-info-light text-foreground border-info-light'
+                                }`}
+                              >
+                                {item.type === 'class' && 'Live Class'}
+                                {item.type === 'assessment' && 'Assessment'}
+                                {item.type === 'assignment' && 'Assignment'}
+                              </Badge>
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2">
+                              {item.type === 'assignment' ? 'Due' : 'Starts'} in {formatUpcomingItem(item)}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
                 )}
               </CardContent>
             </Card>

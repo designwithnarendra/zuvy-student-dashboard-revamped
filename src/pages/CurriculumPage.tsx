@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
@@ -402,13 +403,19 @@ const CurriculumPage = () => {
               {item.duration && (
                 <div className="flex items-center gap-1">
                   <Clock className="w-4 h-4 flex-shrink-0" />
-                  <span>{item.duration}</span>
+                  <span>Duration: {item.duration}</span>
                 </div>
               )}
               {item.scheduledDateTime && (
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4 flex-shrink-0" />
-                  <span>{formatScheduledDate(item.scheduledDateTime)}</span>
+                  <span>Start Date: {formatScheduledDate(item.scheduledDateTime)}</span>
+                </div>
+              )}
+              {item.type === 'assessment' && item.endDateTime && (
+                <div className="flex items-center gap-1">
+                  <Calendar className="w-4 h-4 flex-shrink-0" />
+                  <span>End Date: {formatScheduledDate(item.endDateTime)}</span>
                 </div>
               )}
             </div>
@@ -427,10 +434,10 @@ const CurriculumPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <div className="flex">
+      <div className="flex h-[calc(100vh-80px)]">
         {/* Desktop Left Panel - Module Navigation */}
         {!isMobile && (
-          <div className="w-80 bg-card border-r border-border shadow-4dp">
+          <div className="w-80 bg-card border-r border-border shadow-4dp fixed h-full">
             <div className="p-6 border-b border-border">
               <Button variant="link" size="sm" asChild className="mb-4 p-0 h-auto text-foreground hover:text-foreground hover:no-underline">
                 <Link to={`/course/${courseId}`}>
@@ -442,41 +449,49 @@ const CurriculumPage = () => {
               <p className="text-sm text-muted-foreground mt-1 break-words">{course.name}</p>
             </div>
             
-            <ScrollArea className="h-[calc(100vh-120px)]">
+            <ScrollArea className="h-[calc(100vh-200px)]">
               <div className="p-4 space-y-4">
                 {course.modules.map((module: Module) => (
                   <div key={module.id} className="space-y-2">
                     <Button
                       variant="ghost"
-                      className="w-full justify-between text-left h-auto p-3 hover:bg-primary-light hover:text-charcoal"
+                      className="w-full justify-start text-left h-auto p-3 hover:bg-primary-light hover:text-charcoal"
                       onClick={() => toggleModule(module.id)}
                     >
-                      <div className="flex-1 min-w-0 pr-3">
-                        <div className="font-bold text-sm break-words leading-relaxed">Module {module.id}: {module.name}</div>
-                        <div className="text-xs text-muted-foreground mt-1">
-                          {module.topics.length} topics
+                      <div className="flex w-full justify-between items-start gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-sm break-words leading-relaxed whitespace-normal">
+                            Module {module.id}: {module.name}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {module.topics.length} topics
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex-shrink-0 self-start mt-0.5">
-                        {expandedModules.includes(module.id) ? (
-                          <ChevronDown className="w-4 h-4" />
-                        ) : (
-                          <ChevronRight className="w-4 h-4" />
-                        )}
+                        <div className="flex-shrink-0 mt-0.5">
+                          {expandedModules.includes(module.id) ? (
+                            <ChevronDown className="w-4 h-4" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" />
+                          )}
+                        </div>
                       </div>
                     </Button>
                     
                     {expandedModules.includes(module.id) && (
-                      <div className="ml-4 space-y-1">
+                      <div className="space-y-1">
                         {module.topics.map((topic: Topic) => (
                           <Button
                             key={topic.id}
-                            variant={selectedModule === module.id && selectedTopic === topic.id ? "secondary" : "ghost"}
+                            variant="ghost"
                             size="sm"
-                            className="w-full justify-start text-left hover:bg-secondary-light hover:text-charcoal text-sm break-words leading-relaxed p-2"
+                            className={`w-full justify-start text-left hover:bg-primary-light hover:text-charcoal text-sm break-words leading-relaxed p-2 ${
+                              selectedModule === module.id && selectedTopic === topic.id 
+                                ? "bg-primary-light border-l-4 border-primary text-charcoal" 
+                                : ""
+                            }`}
                             onClick={() => handleTopicSelect(module.id, topic.id)}
                           >
-                            <span className="break-words">{topic.name}</span>
+                            <span className="break-words whitespace-normal">{topic.name}</span>
                           </Button>
                         ))}
                       </div>
@@ -489,7 +504,7 @@ const CurriculumPage = () => {
         )}
 
         {/* Main Content Area */}
-        <div className="flex-1 p-4 md:p-8">
+        <div className={`flex-1 p-4 md:p-8 overflow-y-auto ${!isMobile ? 'ml-80' : ''}`}>
           <div className="max-w-4xl mx-auto">
             {currentTopic ? (
               <div>
@@ -527,7 +542,10 @@ const CurriculumPage = () => {
                   modules={course.modules}
                   selectedModule={selectedModule}
                   selectedTopic={selectedTopic}
-                  onTopicSelect={handleTopicSelect}
+                  onTopicSelect={(moduleId, topicId) => {
+                    handleTopicSelect(moduleId, topicId);
+                    // Close the sheet by triggering a click outside or programmatically
+                  }}
                   courseName={course.name}
                 />
               </div>
