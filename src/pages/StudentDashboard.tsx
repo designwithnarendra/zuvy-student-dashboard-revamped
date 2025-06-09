@@ -146,25 +146,25 @@ const StudentDashboard = () => {
                             {course.instructor.name}
                           </span>
                         </div>
-
-                        {/* Progress Bar */}
-                        <div className="mb-4 md:mb-0">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-sm font-medium">Progress</span>
-                            <span className="text-sm text-muted-foreground">{course.progress}%</span>
-                          </div>
-                          <div className="progress-bg rounded-full h-2">
-                            <div 
-                              className="progress-fill h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${course.progress}%` }}
-                            />
-                          </div>
-                        </div>
                       </div>
 
                       {/* Action Button - Desktop: top right */}
                       <div className="hidden md:flex flex-shrink-0">
                         {getActionButton(course)}
+                      </div>
+                    </div>
+
+                    {/* Progress Bar - Full width with percentage inside */}
+                    <div className="relative w-full mb-4 md:mb-0">
+                      <div className="progress-bg rounded-full h-6 w-full">
+                        <div 
+                          className="progress-fill h-6 rounded-full transition-all duration-300 flex items-center justify-center relative"
+                          style={{ width: `${course.progress}%` }}
+                        >
+                          <div className="absolute right-2 bg-background px-2 py-0.5 rounded text-xs font-medium text-foreground min-w-[40px] text-center">
+                            {course.progress}%
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -178,8 +178,8 @@ const StudentDashboard = () => {
                 {/* Separator and Upcoming Items - Only for enrolled courses */}
                 {course.status === 'enrolled' && course.upcomingItems.length > 0 && (
                   <>
-                    {/* Separator */}
-                    <div className="border-t border-border mb-6"></div>
+                    {/* Separator with margin */}
+                    <div className="border-t border-border mt-6 mb-6"></div>
 
                     {/* Upcoming Items */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -232,6 +232,7 @@ const StudentDashboard = () => {
           ))}
         </div>
 
+        {/* Empty state */}
         {filteredCourses.length === 0 && (
           <Card className="text-center py-12 shadow-4dp">
             <CardContent>

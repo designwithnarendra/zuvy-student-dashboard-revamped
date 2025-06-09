@@ -21,6 +21,7 @@ import {
 import { mockCourses, Module, Topic, TopicItem } from "@/lib/mockData";
 import Header from "@/components/Header";
 import ModuleSheet from "@/components/ModuleSheet";
+import ContentBottomSheet from "@/components/ContentBottomSheet";
 
 const CurriculumPage = () => {
   const { courseId, moduleId, topicId } = useParams();
@@ -29,6 +30,12 @@ const CurriculumPage = () => {
   const [selectedTopic, setSelectedTopic] = useState("");
   const [expandedModules, setExpandedModules] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [contentSheet, setContentSheet] = useState({
+    isOpen: false,
+    contentType: '',
+    contentTitle: '',
+    contentId: ''
+  });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -273,6 +280,15 @@ const CurriculumPage = () => {
     const isAssessment = item.type === 'assessment';
     const isFeedback = item.type === 'feedback';
 
+    const handleContentClick = (type: string, title: string, id: string) => {
+      setContentSheet({
+        isOpen: true,
+        contentType: type,
+        contentTitle: title,
+        contentId: id
+      });
+    };
+
     if (isLiveClass) {
       if (item.scheduledDateTime && new Date() < item.scheduledDateTime) {
         const tenMinutesBefore = new Date(item.scheduledDateTime.getTime() - 10 * 60 * 1000);
@@ -295,10 +311,13 @@ const CurriculumPage = () => {
     if (isRecording) {
       if (item.status === 'completed') {
         return (
-          <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent" asChild>
-            <Link to={`/content/${item.type}/${item.id}`}>
-              Watch Recording
-            </Link>
+          <Button 
+            size="sm" 
+            variant="outline" 
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground bg-transparent"
+            onClick={() => handleContentClick('recording', item.title, item.id)}
+          >
+            Watch Recording
           </Button>
         );
       } else {
@@ -312,27 +331,36 @@ const CurriculumPage = () => {
 
     if (isVideo) {
       return (
-        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent" asChild>
-          <Link to={`/content/${item.type}/${item.id}`}>
-            {item.status === 'completed' ? 'Watch Again' : 'Watch Video'}
-          </Link>
+        <Button 
+          size="sm" 
+          variant="outline" 
+          className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
+          onClick={() => handleContentClick('video', item.title, item.id)}
+        >
+          {item.status === 'completed' ? 'Watch Again' : 'Watch Video'}
         </Button>
       );
     }
 
     if (isArticle) {
       return (
-        <Button size="sm" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent" asChild>
-          <Link to={`/content/${item.type}/${item.id}`}>
-            {item.status === 'completed' ? 'Read Again' : 'Read Article'}
-          </Link>
+        <Button 
+          size="sm" 
+          variant="outline" 
+          className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground bg-transparent"
+          onClick={() => handleContentClick('article', item.title, item.id)}
+        >
+          {item.status === 'completed' ? 'Read Again' : 'Read Article'}
         </Button>
       );
     }
 
     if (isAssignment) {
       return (
-        <Button size="sm">
+        <Button 
+          size="sm"
+          onClick={() => handleContentClick('assignment', item.title, item.id)}
+        >
           {item.status === 'completed' ? 'View Submission' : 'Start Assignment'}
         </Button>
       );
@@ -346,7 +374,10 @@ const CurriculumPage = () => {
       }
       
       return (
-        <Button size="sm">
+        <Button 
+          size="sm"
+          onClick={() => handleContentClick('assessment', item.title, item.id)}
+        >
           {item.status === 'completed' ? 'View Results' : 'Start Assessment'}
         </Button>
       );
@@ -551,6 +582,15 @@ const CurriculumPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Content Bottom Sheet */}
+      <ContentBottomSheet
+        isOpen={contentSheet.isOpen}
+        onClose={() => setContentSheet({ ...contentSheet, isOpen: false })}
+        contentType={contentSheet.contentType}
+        contentTitle={contentSheet.contentTitle}
+        contentId={contentSheet.contentId}
+      />
     </div>
   );
 };

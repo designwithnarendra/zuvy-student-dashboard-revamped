@@ -257,17 +257,17 @@ const CourseDashboard = () => {
               </div>
             </div>
 
-            {/* Progress Bar */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-medium">Overall Progress</span>
-                <span className="text-sm text-muted-foreground">{course.progress}%</span>
-              </div>
-              <div className="progress-bg rounded-full h-3">
+            {/* Progress Bar - Full width with percentage inside */}
+            <div className="relative w-full mb-6">
+              <div className="progress-bg rounded-full h-6 w-full">
                 <div 
-                  className="progress-fill h-3 rounded-full transition-all duration-300"
+                  className="progress-fill h-6 rounded-full transition-all duration-300 flex items-center justify-center relative"
                   style={{ width: `${course.progress}%` }}
-                />
+                >
+                  <div className="absolute right-2 bg-background px-2 py-0.5 rounded text-xs font-medium text-foreground min-w-[40px] text-center">
+                    {course.progress}%
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -324,17 +324,17 @@ const CourseDashboard = () => {
                         : `Continue with: ${course.currentModule.nextItem.name}`}
                     </p>
                   </div>
-                  {/* Current Module Progress */}
-                  <div className="mb-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium">Module Progress</span>
-                      <span className="text-sm text-muted-foreground">65%</span>
-                    </div>
-                    <div className="progress-bg rounded-full h-2">
+                  {/* Current Module Progress - Full width with percentage inside */}
+                  <div className="relative w-full mb-4">
+                    <div className="progress-bg rounded-full h-6 w-full">
                       <div 
-                        className="progress-fill h-2 rounded-full transition-all duration-300"
+                        className="progress-fill h-6 rounded-full transition-all duration-300 flex items-center justify-center relative"
                         style={{ width: '65%' }}
-                      />
+                      >
+                        <div className="absolute right-2 bg-background px-2 py-0.5 rounded text-xs font-medium text-foreground min-w-[40px] text-center">
+                          65%
+                        </div>
+                      </div>
                     </div>
                   </div>
                   {/* Desktop CTA - Bottom right with padding */}
