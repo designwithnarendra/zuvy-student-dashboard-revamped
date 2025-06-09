@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetClose,
 } from "@/components/ui/sheet";
-import { X, Play, FileText, BookOpen } from "lucide-react";
+import { X, Play, FileText, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface ContentBottomSheetProps {
   isOpen: boolean;
@@ -32,14 +32,16 @@ const ContentBottomSheet = ({
       case 'recording':
         return (
           <div className="space-y-4">
-            <div className="w-full h-64 bg-muted rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <Play className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">Video Player</p>
-                <p className="text-xs text-muted-foreground">Content ID: {contentId}</p>
+            <div className="w-full max-w-4xl mx-auto px-8">
+              <div className="w-full h-80 bg-muted rounded-lg flex items-center justify-center">
+                <div className="text-center">
+                  <Play className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                  <p className="text-sm text-muted-foreground">Video Player</p>
+                  <p className="text-xs text-muted-foreground">Content ID: {contentId}</p>
+                </div>
               </div>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 max-w-4xl mx-auto px-8">
               <h3 className="text-lg font-semibold">{contentTitle}</h3>
               <p className="text-muted-foreground">
                 This is a placeholder for the video content. In a real implementation, 
@@ -52,7 +54,7 @@ const ContentBottomSheet = ({
       case 'article':
         return (
           <div className="space-y-4">
-            <div className="flex items-start gap-3 mb-4">
+            <div className="flex items-start gap-3 mb-4 max-w-4xl mx-auto px-8">
               <div className="w-10 h-10 rounded-full bg-accent-light flex items-center justify-center">
                 <FileText className="w-5 h-5 text-accent" />
               </div>
@@ -61,7 +63,7 @@ const ContentBottomSheet = ({
                 <p className="text-sm text-muted-foreground">Article Content</p>
               </div>
             </div>
-            <div className="prose prose-sm max-w-none">
+            <div className="prose prose-sm max-w-4xl mx-auto px-8">
               <p>This is a placeholder for the article content. In a real implementation, this would contain the actual article text, images, and formatting.</p>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -148,7 +150,7 @@ const ContentBottomSheet = ({
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="bottom" className="h-[70vh] p-0">
+      <SheetContent side="bottom" className="h-[85vh] p-0">
         <div className="flex flex-col h-full">
           <SheetHeader className="flex flex-row items-center justify-between space-y-0 p-6 border-b">
             <SheetTitle className="text-left">
@@ -170,6 +172,22 @@ const ContentBottomSheet = ({
           <ScrollArea className="flex-1 p-6">
             {renderContent()}
           </ScrollArea>
+
+          {/* Navigation Footer */}
+          <div className="border-t p-4">
+            <div className="flex justify-between items-center">
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <ChevronLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Back: Introduction to React</span>
+                <span className="sm:hidden">Back</span>
+              </Button>
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <span className="hidden sm:inline">Next: Advanced Concepts</span>
+                <span className="sm:hidden">Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
         </div>
       </SheetContent>
     </Sheet>
